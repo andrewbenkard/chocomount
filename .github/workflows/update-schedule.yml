@@ -1,0 +1,46 @@
+name: Update Ferry Schedule
+
+on:
+  # Run automatically twice a day (Eastern Time: 6 AM and 2 PM)
+  schedule:
+    - cron: '0 11 * * *'   # 11:00 UTC = 6:00 AM ET (7 AM EDT)
+    - cron: '0 19 * * *'   # 19:00 UTC = 2:00 PM ET (3 PM EDT)
+
+  # Also allow a manual trigger from the GitHub Actions tab
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  fetch-and-commit:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: |
+          pip install playwright
+          playwright install chromium --with-deps
+
+      - name: Fetch ferry schedule
+        run: python fetch_schedule.py
+
+      - name: Commit updated schedule
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add schedule.json
+          if git diff --cached --quiet; then
+            echo "No changes to schedule.json — skipping commit."
+          else
+            git commit -m "chore: update ferry schedule [$(date -u +'%Y-%m-%d %H:%M UTC')]"
+            git push
+          fi

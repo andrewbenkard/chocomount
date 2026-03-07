@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fishers Island Ferry — Vehicle Schedule</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #f4f5f7;
+      color: #1a1a2e;
+      min-height: 100vh;
+    }
+
+    header {
+      background: #222f6e;
+      color: #fff;
+      padding: 20px 24px 18px;
+    }
+    header h1 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      letter-spacing: 0.01em;
+    }
+    header p {
+      font-size: 0.8rem;
+      opacity: 0.7;
+      margin-top: 4px;
+    }
+
+    main {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 20px 16px 40px;
+    }
+
+    .updated {
+      font-size: 0.75rem;
+      color: #666;
+      margin-bottom: 20px;
+    }
+
+    /* ── Day card ─────────────────────────────────────────── */
+    .day-card {
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+      margin-bottom: 20px;
+      overflow: hidden;
+    }
+
+    .day-header {
+      background: #222f6e;
+      color: #fff;
+      padding: 12px 18px 11px;
+    }
+    .day-of-week {
+      font-size: 1.1rem;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+    }
+    .day-date {
+      font-size: 0.78rem;
+      opacity: 0.72;
+      margin-top: 2px;
+    }
+
+    /* ── Two-column directions grid ──────────────────────── */
+    .directions-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+    @media (max-width: 500px) {
+      .directions-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .direction-col {
+      padding: 0;
+    }
+    .direction-col + .direction-col {
+      border-left: 1px solid #eee;
+    }
+    @media (max-width: 500px) {
+      .direction-col + .direction-col {
+        border-left: none;
+        border-top: 1px solid #eee;
+      }
+    }
+
+    .direction-label {
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: #222f6e;
+      padding: 9px 14px 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      border-bottom: 1px solid #f0f0f0;
+      background: #f8f9fc;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    td {
+      padding: 7px 14px;
+      font-size: 0.88rem;
+      border-top: 1px solid #f2f2f2;
+    }
+    td:last-child { text-align: right; }
+
+    .time {
+      font-weight: 600;
+      color: #1a1a2e;
+    }
+
+    .spaces {
+      font-weight: 700;
+      font-size: 0.85rem;
+    }
+    .spaces.high { color: #1a8a3a; }
+    .spaces.mid  { color: #d97706; }
+    .spaces.low  { color: #dc2626; }
+
+    .spaces-label {
+      font-size: 0.7rem;
+      color: #999;
+      font-weight: 400;
+    }
+
+    .no-data {
+      color: #aaa;
+      font-size: 0.85rem;
+      padding: 12px 14px;
+    }
+
+    #error-msg {
+      display: none;
+      background: #fff3f3;
+      border: 1px solid #f5c0c0;
+      border-radius: 8px;
+      padding: 14px 16px;
+      color: #c0392b;
+      font-size: 0.85rem;
+      margin-bottom: 16px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 16px;
+      font-size: 0.72rem;
+      color: #aaa;
+    }
+    footer a { color: #222f6e; text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Fishers Island Ferry</h1>
+  <p>Vehicle Space Availability &mdash; Next 7 Days</p>
+</header>
+
+<main>
+  <p class="updated" id="updated-time">Loading schedule&hellip;</p>
+  <div id="error-msg"></div>
+  <div id="schedule"></div>
+</main>
+
+<footer>
+  Data from <a href="https://www.fiferry.com" target="_blank" rel="noopener">fiferry.com</a>.
+  Book vehicles directly on their site.
+</footer>
+
+<script>
+  function spaceClass(n) {
+    if (n === null || n === undefined) return '';
+    if (n >= 15) return 'high';
+    if (n >= 5)  return 'mid';
+    return 'low';
+  }
+
+  function formatUpdated(iso) {
+    try {
+      const d = new Date(iso);
+      return 'Updated ' + d.toLocaleString('en-US', {
+        month: 'short', day: 'numeric', year: 'numeric',
+        hour: 'numeric', minute: '2-digit', timeZoneName: 'short'
+      });
+    } catch { return ''; }
+  }
+
+  // Split "Sunday, March 8, 2026" → { dow: "Sunday", date: "March 8, 2026" }
+  function splitLabel(label) {
+    const comma = label.indexOf(',');
+    if (comma === -1) return { dow: label, date: '' };
+    return { dow: label.slice(0, comma), date: label.slice(comma + 2) };
+  }
+
+  function renderDirection(dir) {
+    const label = dir.direction === 'From New London'
+      ? 'New London &rarr; Fishers Island'
+      : 'Fishers Island &rarr; New London';
+
+    if (!dir.sailings || dir.sailings.length === 0) {
+      return `
+        <div class="direction-col">
+          <div class="direction-label">${label}</div>
+          <div class="no-data">No sailings listed.</div>
+        </div>`;
+    }
+
+    const rows = dir.sailings.map(s => {
+      const cls = spaceClass(s.vehicle_spaces);
+      const spacesHtml = s.vehicle_spaces !== null && s.vehicle_spaces !== undefined
+        ? `<span class="spaces ${cls}">${s.vehicle_spaces}</span><span class="spaces-label"> cars</span>`
+        : `<span class="spaces-label">—</span>`;
+      return `<tr><td class="time">${s.time}</td><td>${spacesHtml}</td></tr>`;
+    }).join('');
+
+    return `
+      <div class="direction-col">
+        <div class="direction-label">${label}</div>
+        <table><tbody>${rows}</tbody></table>
+      </div>`;
+  }
+
+  function renderSchedule(data) {
+    document.getElementById('updated-time').textContent = formatUpdated(data.fetched_at);
+
+    const html = data.days.map(day => {
+      const { dow, date } = splitLabel(day.label);
+      const cols = (day.directions || []).map(renderDirection).join('');
+      return `
+        <div class="day-card">
+          <div class="day-header">
+            <div class="day-of-week">${dow}</div>
+            <div class="day-date">${date}</div>
+          </div>
+          <div class="directions-grid">${cols}</div>
+        </div>`;
+    }).join('');
+
+    document.getElementById('schedule').innerHTML = html;
+  }
+
+  fetch('schedule.json?_=' + Date.now())
+    .then(r => {
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+      return r.json();
+    })
+    .then(renderSchedule)
+    .catch(() => {
+      document.getElementById('updated-time').textContent = '';
+      const el = document.getElementById('error-msg');
+      el.style.display = 'block';
+      el.textContent = 'Could not load schedule data. Please try refreshing the page.';
+    });
+</script>
+</body>
+</html>
