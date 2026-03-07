@@ -65,7 +65,7 @@ async def fetch_sailings(page, date_str: str, departure: str, destination: str) 
     await page.wait_for_timeout(6000)
 
     # Scroll the right panel to trigger lazy loading
-    await page.mouse.wheel(600, 400, delta_x=0, delta_y=400)
+    await page.mouse.wheel(0, 400)
     await page.wait_for_timeout(2000)
 
     frame = await get_hornblower_frame(page)
