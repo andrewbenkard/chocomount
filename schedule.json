@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-03-08T16:56:19",
+  "fetched_at": "2026-03-08T19:44:26",
   "days": [
     {
       "date": "2026-03-09",
@@ -66,7 +66,7 @@
             },
             {
               "time": "3:30 PM",
-              "vehicle_spaces": 24
+              "vehicle_spaces": 23
             },
             {
               "time": "6:15 PM",
@@ -79,7 +79,7 @@
           "sailings": [
             {
               "time": "8:15 AM",
-              "vehicle_spaces": 22
+              "vehicle_spaces": 21
             },
             {
               "time": "12:45 PM",
@@ -150,7 +150,7 @@
             },
             {
               "time": "11:30 AM",
-              "vehicle_spaces": 25
+              "vehicle_spaces": 24
             },
             {
               "time": "3:30 PM",
