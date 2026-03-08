@@ -60,35 +60,49 @@ async def fetch_sailings(page, date_str: str, departure: str, destination: str) 
     url = build_url(date_str, departure, destination)
     print(f"  → {url}", flush=True)
 
-    await page.goto(url, wait_until="domcontentloaded")
-    # Give the Hornblower iframe time to render
-    await page.wait_for_timeout(6000)
+    # Retry loop: cold-start on the first page load can leave the iframe
+    # empty; subsequent attempts with longer waits almost always succeed.
+    ATTEMPTS   = 3
+    WAIT_MS    = [8000, 12000, 16000]   # progressive back-off per attempt
 
-    # Scroll the right panel to trigger lazy loading
-    await page.mouse.wheel(0, 400)
-    await page.wait_for_timeout(2000)
+    for attempt in range(ATTEMPTS):
+        await page.goto(url, wait_until="domcontentloaded")
+        wait = WAIT_MS[attempt]
+        print(f"    attempt {attempt + 1}: waiting {wait // 1000}s …", flush=True)
+        await page.wait_for_timeout(wait)
 
-    frame = await get_hornblower_frame(page)
-    if frame is None:
-        print("    ⚠ Hornblower frame not found", flush=True)
-        return []
+        # Scroll to trigger lazy loading
+        await page.mouse.wheel(0, 400)
+        await page.wait_for_timeout(2000)
 
-    try:
-        text = await frame.inner_text("body", timeout=5000)
-    except Exception as e:
-        print(f"    ⚠ Could not read frame text: {e}", flush=True)
-        return []
+        frame = await get_hornblower_frame(page)
+        if frame is None:
+            print("    ⚠ Hornblower frame not found", flush=True)
+            continue
 
-    times   = TIME_RE.findall(text)
-    spaces  = SPACES_RE.findall(text)
+        try:
+            text = await frame.inner_text("body", timeout=5000)
+        except Exception as e:
+            print(f"    ⚠ Could not read frame text: {e}", flush=True)
+            continue
 
-    sailings = []
-    for i, t in enumerate(times):
-        vehicle_spaces = int(spaces[i]) if i < len(spaces) else None
-        sailings.append({"time": t.strip(), "vehicle_spaces": vehicle_spaces})
+        times  = TIME_RE.findall(text)
+        spaces = SPACES_RE.findall(text)
 
-    print(f"    ✓ {len(sailings)} sailing(s) found", flush=True)
-    return sailings
+        if not times:
+            print("    ⚠ No sailings parsed — retrying …", flush=True)
+            continue
+
+        sailings = []
+        for i, t in enumerate(times):
+            vehicle_spaces = int(spaces[i]) if i < len(spaces) else None
+            sailings.append({"time": t.strip(), "vehicle_spaces": vehicle_spaces})
+
+        print(f"    ✓ {len(sailings)} sailing(s) found", flush=True)
+        return sailings
+
+    print("    ✗ All attempts failed — returning empty list", flush=True)
+    return []
 
 
 # ---------------------------------------------------------------------------
