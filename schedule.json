@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-03-22T11:48:07",
+  "fetched_at": "2026-03-22T19:48:18",
   "days": [
     {
       "date": "2026-03-23",
@@ -18,11 +18,11 @@
             },
             {
               "time": "3:30 PM",
-              "vehicle_spaces": 24
+              "vehicle_spaces": 23
             },
             {
               "time": "6:15 PM",
-              "vehicle_spaces": 25
+              "vehicle_spaces": 24
             }
           ]
         },
@@ -31,7 +31,7 @@
           "sailings": [
             {
               "time": "8:15 AM",
-              "vehicle_spaces": 18
+              "vehicle_spaces": 15
             },
             {
               "time": "12:45 PM",
@@ -39,7 +39,7 @@
             },
             {
               "time": "4:45 PM",
-              "vehicle_spaces": 21
+              "vehicle_spaces": 20
             },
             {
               "time": "7:00 PM",
@@ -58,7 +58,7 @@
           "sailings": [
             {
               "time": "7:00 AM",
-              "vehicle_spaces": 14
+              "vehicle_spaces": 12
             },
             {
               "time": "11:30 AM",
@@ -275,7 +275,7 @@
             },
             {
               "time": "12:45 PM",
-              "vehicle_spaces": 23
+              "vehicle_spaces": 22
             },
             {
               "time": "4:45 PM",
