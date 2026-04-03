@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-04-03T12:05:46",
+  "fetched_at": "2026-04-03T19:41:49",
   "days": [
     {
       "date": "2026-04-04",
@@ -14,7 +14,7 @@
             },
             {
               "time": "10:00 AM",
-              "vehicle_spaces": 22
+              "vehicle_spaces": 21
             },
             {
               "time": "1:00 PM",
@@ -39,7 +39,7 @@
             },
             {
               "time": "11:15 AM",
-              "vehicle_spaces": 22
+              "vehicle_spaces": 21
             },
             {
               "time": "2:15 PM",
@@ -47,7 +47,7 @@
             },
             {
               "time": "5:15 PM",
-              "vehicle_spaces": 23
+              "vehicle_spaces": 24
             },
             {
               "time": "7:15 PM",
@@ -66,11 +66,11 @@
           "sailings": [
             {
               "time": "7:00 AM",
-              "vehicle_spaces": 25
+              "vehicle_spaces": 24
             },
             {
               "time": "10:00 AM",
-              "vehicle_spaces": 24
+              "vehicle_spaces": 22
             },
             {
               "time": "1:00 PM",
@@ -103,7 +103,7 @@
             },
             {
               "time": "5:15 PM",
-              "vehicle_spaces": 20
+              "vehicle_spaces": 19
             },
             {
               "time": "7:15 PM",
@@ -122,7 +122,7 @@
           "sailings": [
             {
               "time": "7:00 AM",
-              "vehicle_spaces": 16
+              "vehicle_spaces": 15
             },
             {
               "time": "11:30 AM",
@@ -147,7 +147,7 @@
             },
             {
               "time": "12:45 PM",
-              "vehicle_spaces": 15
+              "vehicle_spaces": 14
             },
             {
               "time": "4:45 PM",
@@ -222,7 +222,7 @@
             },
             {
               "time": "3:30 PM",
-              "vehicle_spaces": 23
+              "vehicle_spaces": 22
             },
             {
               "time": "6:15 PM",
@@ -258,7 +258,7 @@
           "sailings": [
             {
               "time": "7:00 AM",
-              "vehicle_spaces": 17
+              "vehicle_spaces": 14
             },
             {
               "time": "11:30 AM",
@@ -283,11 +283,11 @@
             },
             {
               "time": "12:45 PM",
-              "vehicle_spaces": 22
+              "vehicle_spaces": 21
             },
             {
               "time": "4:45 PM",
-              "vehicle_spaces": 20
+              "vehicle_spaces": 17
             },
             {
               "time": "7:00 PM",
@@ -306,7 +306,7 @@
           "sailings": [
             {
               "time": "7:00 AM",
-              "vehicle_spaces": 20
+              "vehicle_spaces": 19
             },
             {
               "time": "11:30 AM",
@@ -339,7 +339,7 @@
             },
             {
               "time": "4:45 PM",
-              "vehicle_spaces": 22
+              "vehicle_spaces": 18
             },
             {
               "time": "7:00 PM",
