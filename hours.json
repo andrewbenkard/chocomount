@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-05-29T12:18:58Z",
+  "fetched_at": "2026-05-29T12:27:06Z",
   "used_fallback": true,
   "businesses": [
     {
@@ -32,6 +32,138 @@
             "9am–12:30pm",
             "9am–12:30pm",
             "9am–12:30pm"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Transfer Station",
+      "url": "https://fiwmd.net/",
+      "schedules": [
+        {
+          "label": "Regular",
+          "start_date": "",
+          "end_date": "",
+          "hours_by_dow": [
+            "7:30 AM– 12:00 PM",
+            "7:30 AM– 4:00 PM",
+            "7:30 AM– 12:00 PM",
+            "7:30 AM– 4:00 PM",
+            "7:30 AM– 12:00 PM",
+            "7:30 AM– 4:00 PM",
+            "7:30 AM– 12:00 PM"
+          ],
+          "holiday_closings": [
+            {
+              "date": "2026-01-01",
+              "name": "New Year’s Day"
+            },
+            {
+              "date": "2026-01-19",
+              "name": "Martin Luther King Jr. Day"
+            },
+            {
+              "date": "2026-02-16",
+              "name": "Presidents’ Day"
+            },
+            {
+              "date": "2026-05-25",
+              "name": "Memorial Day"
+            },
+            {
+              "date": "2026-06-19",
+              "name": "Juneteenth"
+            },
+            {
+              "date": "2026-07-04",
+              "name": "Independence Day"
+            },
+            {
+              "date": "2026-09-07",
+              "name": "Labor Day"
+            },
+            {
+              "date": "2026-10-12",
+              "name": "Indigenous Peoples’ Day"
+            },
+            {
+              "date": "2026-11-11",
+              "name": "Veterans Day"
+            },
+            {
+              "date": "2026-11-26",
+              "name": "Thanksgiving Day"
+            },
+            {
+              "date": "2026-12-25",
+              "name": "Christmas Day"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Compost Station",
+      "url": "https://fiwmd.net/",
+      "schedules": [
+        {
+          "label": "Regular",
+          "start_date": "",
+          "end_date": "",
+          "hours_by_dow": [
+            "Closed",
+            "7:30 AM– 4:00 PM",
+            "12:30 PM– 4:00 PM",
+            "7:30 AM– 4:00 PM",
+            "12:30 PM– 4:00 PM",
+            "7:30 AM– 4:00 PM",
+            "12:30 PM– 4:00 PM"
+          ],
+          "holiday_closings": [
+            {
+              "date": "2026-01-01",
+              "name": "New Year’s Day"
+            },
+            {
+              "date": "2026-01-19",
+              "name": "Martin Luther King Jr. Day"
+            },
+            {
+              "date": "2026-02-16",
+              "name": "Presidents’ Day"
+            },
+            {
+              "date": "2026-05-25",
+              "name": "Memorial Day"
+            },
+            {
+              "date": "2026-06-19",
+              "name": "Juneteenth"
+            },
+            {
+              "date": "2026-07-04",
+              "name": "Independence Day"
+            },
+            {
+              "date": "2026-09-07",
+              "name": "Labor Day"
+            },
+            {
+              "date": "2026-10-12",
+              "name": "Indigenous Peoples’ Day"
+            },
+            {
+              "date": "2026-11-11",
+              "name": "Veterans Day"
+            },
+            {
+              "date": "2026-11-26",
+              "name": "Thanksgiving Day"
+            },
+            {
+              "date": "2026-12-25",
+              "name": "Christmas Day"
+            }
           ]
         }
       ]

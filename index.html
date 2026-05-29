@@ -177,7 +177,8 @@
 
 <footer>
   Ferry data from <a href="https://www.fiferry.com" target="_blank" rel="noopener">fiferry.com</a>.
-  Doctor's hours from <a href="https://islandhealthproject.com" target="_blank" rel="noopener">islandhealthproject.com</a>.
+  Doctor&rsquo;s hours from <a href="https://islandhealthproject.com" target="_blank" rel="noopener">islandhealthproject.com</a>.
+  Waste Management hours from <a href="https://fiwmd.net" target="_blank" rel="noopener">fiwmd.net</a>.
 </footer>
 
 <script>
@@ -218,16 +219,18 @@
     return `${y}-${mo}-${dy}`;
   }
 
-  function getDoctorHours(date) {
-    if (!_hoursData || !_hoursData.businesses) return null;
-    const biz = _hoursData.businesses.find(b => b.name === "Doctor's Office");
-    if (!biz) return null;
+  function getBusinessHours(biz, date) {
     const ds = _dateStr(date);
     for (const sched of biz.schedules) {
       const inRange =
         (!sched.start_date || ds >= sched.start_date) &&
         (!sched.end_date   || ds <= sched.end_date);
       if (!inRange) continue;
+      // Holiday closings take precedence over regular hours
+      if (sched.holiday_closings) {
+        const hol = sched.holiday_closings.find(h => h.date === ds);
+        if (hol) return `Closed\u00a0(${hol.name})`;
+      }
       return sched.hours_by_dow[date.getDay()] || 'Closed';
     }
     return null;
@@ -263,20 +266,20 @@
   }
 
   function renderOpeningHours(date) {
-    const hours = getDoctorHours(date);
-    if (hours === null) return '';
-    const isClosed = hours.toLowerCase() === 'closed';
-    const valueHtml = isClosed
-      ? `<span class="hours-closed">Closed</span>`
-      : `<span class="hours-value">${hours}</span>`;
+    if (!_hoursData || !_hoursData.businesses || !_hoursData.businesses.length) return '';
+    const rows = _hoursData.businesses.map(biz => {
+      const hours = getBusinessHours(biz, date);
+      if (hours === null) return '';
+      const isClosed = /^closed/i.test(hours);
+      const valueHtml = isClosed
+        ? `<span class="hours-closed">${hours}</span>`
+        : `<span class="hours-value">${hours}</span>`;
+      return `<tr><td class="hours-name">${biz.name}</td><td>${valueHtml}</td></tr>`;
+    }).join('');
+    if (!rows) return '';
     return `
       <div class="card-section-label">Opening Hours</div>
-      <table class="hours-table"><tbody>
-        <tr>
-          <td class="hours-name">Doctor&rsquo;s Office</td>
-          <td>${valueHtml}</td>
-        </tr>
-      </tbody></table>`;
+      <table class="hours-table"><tbody>${rows}</tbody></table>`;
   }
 
   // Parse "Sunday, March 8, 2026" → Date object (local time)
