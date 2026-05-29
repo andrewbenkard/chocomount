@@ -1,6 +1,6 @@
 {
-  "fetched_at": "2026-05-29T12:27:06Z",
-  "used_fallback": true,
+  "fetched_at": "2026-05-29T14:03:44Z",
+  "used_fallback": false,
   "businesses": [
     {
       "name": "Transfer Station",
@@ -11,18 +11,18 @@
           "start_date": "",
           "end_date": "",
           "hours_by_dow": [
-            "7:30 AM– 12:00 PM",
-            "7:30 AM– 4:00 PM",
-            "7:30 AM– 12:00 PM",
-            "7:30 AM– 4:00 PM",
-            "7:30 AM– 12:00 PM",
-            "7:30 AM– 4:00 PM",
-            "7:30 AM– 12:00 PM"
+            "7:30 am – 12:00 pm",
+            "7:30 am – 4:00 pm",
+            "7:30 am – 12:00 pm",
+            "7:30 am – 4:00 pm",
+            "7:30 am – 12:00 pm",
+            "7:30 am – 4:00 pm",
+            "7:30 am – 12:00 pm"
           ],
           "holiday_closings": [
             {
               "date": "2026-01-01",
-              "name": "New Year's Day"
+              "name": "New Year’s Day"
             },
             {
               "date": "2026-01-19",
@@ -30,7 +30,7 @@
             },
             {
               "date": "2026-02-16",
-              "name": "Presidents' Day"
+              "name": "Presidents’ Day"
             },
             {
               "date": "2026-05-25",
@@ -50,7 +50,7 @@
             },
             {
               "date": "2026-10-12",
-              "name": "Indigenous Peoples' Day"
+              "name": "Indigenous Peoples’ Day"
             },
             {
               "date": "2026-11-11",
@@ -77,18 +77,18 @@
           "start_date": "",
           "end_date": "",
           "hours_by_dow": [
-            "Closed",
-            "7:30 AM– 4:00 PM",
-            "12:30 PM– 4:00 PM",
-            "7:30 AM– 4:00 PM",
-            "12:30 PM– 4:00 PM",
-            "7:30 AM– 4:00 PM",
-            "12:30 PM– 4:00 PM"
+            "CLOSED",
+            "7:30 am – 4:00 pm",
+            "12:30 pm – 4:00 pm",
+            "7:30 am – 4:00 pm",
+            "12:30 pm – 4:00 pm",
+            "7:30 am – 4:00 pm",
+            "12:30 pm – 4:00 pm"
           ],
           "holiday_closings": [
             {
               "date": "2026-01-01",
-              "name": "New Year's Day"
+              "name": "New Year’s Day"
             },
             {
               "date": "2026-01-19",
@@ -96,7 +96,7 @@
             },
             {
               "date": "2026-02-16",
-              "name": "Presidents' Day"
+              "name": "Presidents’ Day"
             },
             {
               "date": "2026-05-25",
@@ -116,7 +116,7 @@
             },
             {
               "date": "2026-10-12",
-              "name": "Indigenous Peoples' Day"
+              "name": "Indigenous Peoples’ Day"
             },
             {
               "date": "2026-11-11",
@@ -144,11 +144,11 @@
           "end_date": "",
           "hours_by_dow": [
             "Closed",
-            "1–5pm",
-            "1–7pm",
-            "1–5pm",
-            "1–7pm",
-            "1–5pm",
+            "Closed",
+            "Closed",
+            "Closed",
+            "Closed",
+            "Closed",
             "9am–12pm"
           ]
         }
@@ -160,20 +160,42 @@
       "schedules": [
         {
           "label": "Summer",
-          "start_date": "2026-06-13",
+          "start_date": "2026-06-17",
           "end_date": "2026-08-30",
           "hours_by_dow": [
             "Closed",
-            "7:30AM–5:00PM",
-            "7:30AM–5:00PM",
-            "7:30AM–5:00PM",
-            "7:30AM–5:00PM",
-            "7:30AM–5:00PM",
-            "7:30AM–5:00PM"
+            "7:30 AM–5:00 PM",
+            "7:30 AM–5:00 PM",
+            "7:30 AM–5:00 PM",
+            "7:30 AM–5:00 PM",
+            "7:30 AM–5:00 PM",
+            "7:30 AM–5:00 PM"
           ],
           "holiday_closings": [
-            {"date": "2026-07-04", "name": "Independence Day"},
-            {"date": "2026-09-07", "name": "Labor Day"}
+            {
+              "date": "2026-01-01",
+              "name": "New Year’s Day"
+            },
+            {
+              "date": "2026-05-25",
+              "name": "Memorial Day"
+            },
+            {
+              "date": "2026-07-04",
+              "name": "Independence Day"
+            },
+            {
+              "date": "2026-09-07",
+              "name": "Labor Day"
+            },
+            {
+              "date": "2026-11-26",
+              "name": "Thanksgiving Day"
+            },
+            {
+              "date": "2026-12-25",
+              "name": "Christmas Day"
+            }
           ]
         },
         {
@@ -182,18 +204,38 @@
           "end_date": "",
           "hours_by_dow": [
             "Closed",
-            "7:30AM–1:00PM & 3:00PM–5:00PM",
-            "7:30AM–1:00PM & 3:00PM–5:00PM",
-            "7:30AM–1:00PM & 3:00PM–5:00PM",
-            "7:30AM–1:00PM & 3:00PM–5:00PM",
-            "7:30AM–1:00PM & 3:00PM–5:00PM",
-            "7:30AM–1:00PM & 3:00PM–5:00PM"
+            "7:30 AM–1:00 PM & 3:00 PM–5:00 PM",
+            "7:30 AM–1:00 PM & 3:00 PM–5:00 PM",
+            "7:30 AM–1:00 PM & 3:00 PM–5:00 PM",
+            "7:30 AM–1:00 PM & 3:00 PM–5:00 PM",
+            "7:30 AM–1:00 PM & 3:00 PM–5:00 PM",
+            "7:30 AM–1:00 PM & 3:00 PM–5:00 PM"
           ],
           "holiday_closings": [
-            {"date": "2026-01-01", "name": "New Year's Day"},
-            {"date": "2026-05-25", "name": "Memorial Day"},
-            {"date": "2026-11-26", "name": "Thanksgiving Day"},
-            {"date": "2026-12-25", "name": "Christmas Day"}
+            {
+              "date": "2026-01-01",
+              "name": "New Year’s Day"
+            },
+            {
+              "date": "2026-05-25",
+              "name": "Memorial Day"
+            },
+            {
+              "date": "2026-07-04",
+              "name": "Independence Day"
+            },
+            {
+              "date": "2026-09-07",
+              "name": "Labor Day"
+            },
+            {
+              "date": "2026-11-26",
+              "name": "Thanksgiving Day"
+            },
+            {
+              "date": "2026-12-25",
+              "name": "Christmas Day"
+            }
           ]
         }
       ]
@@ -204,30 +246,30 @@
       "schedules": [
         {
           "label": "Off Peak",
-          "start_date": "2025-09-06",
-          "end_date": "2026-06-21",
+          "start_date": "",
+          "end_date": "",
           "hours_by_dow": [
-            "Closed",
-            "5–7pm",
-            "9am–12pm",
-            "Closed",
-            "9am–12pm",
-            "9am–12pm",
-            "Closed"
+            "CLOSED",
+            "5-7pm",
+            "9am-12pm",
+            "CLOSED",
+            "9am-12pm",
+            "9am-12pm",
+            "CLOSED"
           ]
         },
         {
           "label": "Peak",
-          "start_date": "2026-06-22",
-          "end_date": "2026-09-07",
+          "start_date": "",
+          "end_date": "",
           "hours_by_dow": [
-            "Closed",
-            "9am–12pm & 1–4pm",
-            "9am–12:30pm",
-            "9am–12pm & 1–4pm",
-            "9am–12:30pm",
-            "9am–12:30pm",
-            "9am–12:30pm"
+            "CLOSED",
+            "9am-12pm1pm-4pm",
+            "9am-12:30pm",
+            "9am-12pm1pm-4pm",
+            "9am-12:30pm",
+            "9am-12:30pm",
+            "9am-12:30pm"
           ]
         }
       ]
