@@ -793,30 +793,6 @@ def main():
     now_iso = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
     businesses = []
 
-    # ── Doctor's Office ──────────────────────────────────────────────────────
-    print("Fetching IHP (Doctor's Office) …", flush=True)
-    ihp_fallback = False
-    try:
-        html = asyncio.run(_fetch(IHP_URL))
-        schedules = parse_ihp_html(html)
-        if schedules:
-            print(f"  ✓ {len(schedules)} IHP schedule(s) parsed from live page", flush=True)
-            businesses.append({
-                "name":      "Doctor's Office",
-                "url":       IHP_URL,
-                "schedules": schedules,
-            })
-        else:
-            raise ValueError("no schedules parsed")
-    except Exception as e:
-        print(f"  ⚠ IHP failed ({e}) — using fallback", flush=True)
-        ihp_fallback = True
-        businesses.append({
-            "name":          "Doctor's Office",
-            "url":           IHP_URL,
-            "schedules":     IHP_FALLBACK_SCHEDULES,
-        })
-
     # ── Transfer Station + Compost Station (fiwmd.net) ───────────────────────
     print("Fetching WMD (Transfer + Compost) …", flush=True)
     wmd_fallback = False
@@ -874,6 +850,30 @@ def main():
         print(f"  ⚠ Village Market failed ({e}) — using fallback", flush=True)
         vm_fallback = True
         businesses.append(VM_FALLBACK)
+
+    # ── Doctor's Office (last) ────────────────────────────────────────────────
+    print("Fetching IHP (Doctor's Office) …", flush=True)
+    ihp_fallback = False
+    try:
+        html = asyncio.run(_fetch(IHP_URL))
+        schedules = parse_ihp_html(html)
+        if schedules:
+            print(f"  ✓ {len(schedules)} IHP schedule(s) parsed from live page", flush=True)
+            businesses.append({
+                "name":      "Doctor's Office",
+                "url":       IHP_URL,
+                "schedules": schedules,
+            })
+        else:
+            raise ValueError("no schedules parsed")
+    except Exception as e:
+        print(f"  ⚠ IHP failed ({e}) — using fallback", flush=True)
+        ihp_fallback = True
+        businesses.append({
+            "name":      "Doctor's Office",
+            "url":       IHP_URL,
+            "schedules": IHP_FALLBACK_SCHEDULES,
+        })
 
     data = {
         "fetched_at":    now_iso,

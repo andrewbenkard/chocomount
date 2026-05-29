@@ -3,40 +3,6 @@
   "used_fallback": true,
   "businesses": [
     {
-      "name": "Doctor's Office",
-      "url": "https://islandhealthproject.com/",
-      "schedules": [
-        {
-          "label": "Off Peak",
-          "start_date": "2025-09-06",
-          "end_date": "2026-06-21",
-          "hours_by_dow": [
-            "Closed",
-            "5–7pm",
-            "9am–12pm",
-            "Closed",
-            "9am–12pm",
-            "9am–12pm",
-            "Closed"
-          ]
-        },
-        {
-          "label": "Peak",
-          "start_date": "2026-06-22",
-          "end_date": "2026-09-07",
-          "hours_by_dow": [
-            "Closed",
-            "9am–12pm & 1–4pm",
-            "9am–12:30pm",
-            "9am–12pm & 1–4pm",
-            "9am–12:30pm",
-            "9am–12:30pm",
-            "9am–12:30pm"
-          ]
-        }
-      ]
-    },
-    {
       "name": "Transfer Station",
       "url": "https://fiwmd.net/",
       "schedules": [
@@ -45,18 +11,18 @@
           "start_date": "",
           "end_date": "",
           "hours_by_dow": [
-            "7:30 AM– 12:00 PM",
-            "7:30 AM– 4:00 PM",
-            "7:30 AM– 12:00 PM",
-            "7:30 AM– 4:00 PM",
-            "7:30 AM– 12:00 PM",
-            "7:30 AM– 4:00 PM",
-            "7:30 AM– 12:00 PM"
+            "7:30 AM– 12:00 PM",
+            "7:30 AM– 4:00 PM",
+            "7:30 AM– 12:00 PM",
+            "7:30 AM– 4:00 PM",
+            "7:30 AM– 12:00 PM",
+            "7:30 AM– 4:00 PM",
+            "7:30 AM– 12:00 PM"
           ],
           "holiday_closings": [
             {
               "date": "2026-01-01",
-              "name": "New Year’s Day"
+              "name": "New Year's Day"
             },
             {
               "date": "2026-01-19",
@@ -64,7 +30,7 @@
             },
             {
               "date": "2026-02-16",
-              "name": "Presidents’ Day"
+              "name": "Presidents' Day"
             },
             {
               "date": "2026-05-25",
@@ -84,7 +50,7 @@
             },
             {
               "date": "2026-10-12",
-              "name": "Indigenous Peoples’ Day"
+              "name": "Indigenous Peoples' Day"
             },
             {
               "date": "2026-11-11",
@@ -112,17 +78,17 @@
           "end_date": "",
           "hours_by_dow": [
             "Closed",
-            "7:30 AM– 4:00 PM",
-            "12:30 PM– 4:00 PM",
-            "7:30 AM– 4:00 PM",
-            "12:30 PM– 4:00 PM",
-            "7:30 AM– 4:00 PM",
-            "12:30 PM– 4:00 PM"
+            "7:30 AM– 4:00 PM",
+            "12:30 PM– 4:00 PM",
+            "7:30 AM– 4:00 PM",
+            "12:30 PM– 4:00 PM",
+            "7:30 AM– 4:00 PM",
+            "12:30 PM– 4:00 PM"
           ],
           "holiday_closings": [
             {
               "date": "2026-01-01",
-              "name": "New Year’s Day"
+              "name": "New Year's Day"
             },
             {
               "date": "2026-01-19",
@@ -130,7 +96,7 @@
             },
             {
               "date": "2026-02-16",
-              "name": "Presidents’ Day"
+              "name": "Presidents' Day"
             },
             {
               "date": "2026-05-25",
@@ -150,7 +116,7 @@
             },
             {
               "date": "2026-10-12",
-              "name": "Indigenous Peoples’ Day"
+              "name": "Indigenous Peoples' Day"
             },
             {
               "date": "2026-11-11",
@@ -228,6 +194,40 @@
             {"date": "2026-05-25", "name": "Memorial Day"},
             {"date": "2026-11-26", "name": "Thanksgiving Day"},
             {"date": "2026-12-25", "name": "Christmas Day"}
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Doctor's Office",
+      "url": "https://islandhealthproject.com/",
+      "schedules": [
+        {
+          "label": "Off Peak",
+          "start_date": "2025-09-06",
+          "end_date": "2026-06-21",
+          "hours_by_dow": [
+            "Closed",
+            "5–7pm",
+            "9am–12pm",
+            "Closed",
+            "9am–12pm",
+            "9am–12pm",
+            "Closed"
+          ]
+        },
+        {
+          "label": "Peak",
+          "start_date": "2026-06-22",
+          "end_date": "2026-09-07",
+          "hours_by_dow": [
+            "Closed",
+            "9am–12pm & 1–4pm",
+            "9am–12:30pm",
+            "9am–12pm & 1–4pm",
+            "9am–12:30pm",
+            "9am–12:30pm",
+            "9am–12:30pm"
           ]
         }
       ]
