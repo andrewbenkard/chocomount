@@ -67,23 +67,30 @@
       margin-top: 2px;
     }
 
+    /* ── Section dividers inside each card ───────────────── */
+    .card-section-label {
+      font-size: 0.68rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #666;
+      padding: 7px 14px 6px;
+      background: #f0f2f8;
+      border-top: 1px solid #e4e6ee;
+      border-bottom: 1px solid #e4e6ee;
+    }
+
     /* ── Two-column directions grid ──────────────────────── */
     .directions-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
     }
     @media (max-width: 500px) {
-      .directions-grid {
-        grid-template-columns: 1fr;
-      }
+      .directions-grid { grid-template-columns: 1fr; }
     }
 
-    .direction-col {
-      padding: 0;
-    }
-    .direction-col + .direction-col {
-      border-left: 1px solid #eee;
-    }
+    .direction-col { padding: 0; }
+    .direction-col + .direction-col { border-left: 1px solid #eee; }
     @media (max-width: 500px) {
       .direction-col + .direction-col {
         border-left: none;
@@ -102,10 +109,7 @@
       background: #f8f9fc;
     }
 
-    table {
-      width: 100%;
-      border-collapse: collapse;
-    }
+    table { width: 100%; border-collapse: collapse; }
     td {
       padding: 7px 14px;
       font-size: 0.88rem;
@@ -113,30 +117,29 @@
     }
     td:last-child { text-align: right; }
 
-    .time {
-      font-weight: 600;
-      color: #1a1a2e;
-    }
+    .time { font-weight: 600; color: #1a1a2e; }
 
-    .spaces {
-      font-weight: 700;
-      font-size: 0.85rem;
-    }
+    .spaces { font-weight: 700; font-size: 0.85rem; }
     .spaces.high { color: #1a8a3a; }
     .spaces.mid  { color: #d97706; }
     .spaces.low  { color: #dc2626; }
 
-    .spaces-label {
-      font-size: 0.7rem;
-      color: #999;
-      font-weight: 400;
-    }
+    .spaces-label { font-size: 0.7rem; color: #999; font-weight: 400; }
 
-    .no-data {
-      color: #aaa;
-      font-size: 0.85rem;
-      padding: 12px 14px;
+    .no-data { color: #aaa; font-size: 0.85rem; padding: 12px 14px; }
+
+    /* ── Opening hours section ────────────────────────────── */
+    .hours-table { width: 100%; border-collapse: collapse; }
+    .hours-table td {
+      padding: 8px 14px;
+      font-size: 0.88rem;
+      border-top: 1px solid #f2f2f2;
+      text-align: left;
     }
+    .hours-table td:last-child { text-align: right; }
+    .hours-name { font-weight: 600; color: #1a1a2e; }
+    .hours-value { color: #444; }
+    .hours-closed { color: #aaa; font-style: italic; }
 
     #error-msg {
       display: none;
@@ -173,11 +176,12 @@
 </main>
 
 <footer>
-  Data from <a href="https://www.fiferry.com" target="_blank" rel="noopener">fiferry.com</a>.
-  Book vehicles directly on their site.
+  Ferry data from <a href="https://www.fiferry.com" target="_blank" rel="noopener">fiferry.com</a>.
+  Doctor's hours from <a href="https://islandhealthproject.com" target="_blank" rel="noopener">islandhealthproject.com</a>.
 </footer>
 
 <script>
+  // ── Ferry helpers ──────────────────────────────────────────
   function spaceClass(n) {
     if (n === null || n === undefined) return '';
     if (n >= 15) return 'high';
@@ -202,6 +206,42 @@
     return { dow: label.slice(0, comma), date: label.slice(comma + 2) };
   }
 
+  // ── Doctor's office hours ──────────────────────────────────
+  // Off Peak: Sep 6, 2025 – Jun 20, 2026
+  // Peak:     Jun 22, 2026 – Sep 7, 2026
+  // Indexed by JS day-of-week: 0=Sun 1=Mon 2=Tue 3=Wed 4=Thu 5=Fri 6=Sat
+  const IHP_OFF_PEAK = [
+    'Closed',       // Sun
+    '5–7pm',        // Mon
+    '9am–12pm',     // Tue
+    'Closed',       // Wed
+    '9am–12pm',     // Thu
+    '9am–12pm',     // Fri
+    'Closed'        // Sat
+  ];
+  const IHP_PEAK = [
+    'Closed',             // Sun
+    '9am–12pm & 1–4pm',   // Mon
+    '9am–12:30pm',        // Tue
+    '9am–12pm & 1–4pm',   // Wed
+    '9am–12:30pm',        // Thu
+    '9am–12:30pm',        // Fri
+    '9am–12:30pm'         // Sat
+  ];
+  const PEAK_START = new Date('2026-06-22');
+  const PEAK_END   = new Date('2026-09-08'); // exclusive upper bound
+
+  function getDoctorHours(label) {
+    // Parse "March 8, 2026" from "Sunday, March 8, 2026"
+    const m = label.match(/,\s*(.+)$/);
+    if (!m) return null;
+    const d = new Date(m[1]);
+    if (isNaN(d.getTime())) return null;
+    const isPeak = d >= PEAK_START && d < PEAK_END;
+    return isPeak ? IHP_PEAK[d.getDay()] : IHP_OFF_PEAK[d.getDay()];
+  }
+
+  // ── Render helpers ─────────────────────────────────────────
   function renderDirection(dir) {
     const label = dir.direction === 'From New London'
       ? 'New London &rarr; Fishers Island'
@@ -230,19 +270,39 @@
       </div>`;
   }
 
+  function renderOpeningHours(label) {
+    const hours = getDoctorHours(label);
+    if (hours === null) return '';
+    const isClosed = hours.toLowerCase() === 'closed';
+    const valueHtml = isClosed
+      ? `<span class="hours-closed">Closed</span>`
+      : `<span class="hours-value">${hours}</span>`;
+    return `
+      <div class="card-section-label">Opening Hours</div>
+      <table class="hours-table"><tbody>
+        <tr>
+          <td class="hours-name">Doctor&rsquo;s Office</td>
+          <td>${valueHtml}</td>
+        </tr>
+      </tbody></table>`;
+  }
+
   function renderSchedule(data) {
     document.getElementById('updated-time').textContent = formatUpdated(data.fetched_at);
 
     const html = data.days.map(day => {
       const { dow, date } = splitLabel(day.label);
       const cols = (day.directions || []).map(renderDirection).join('');
+      const openingHours = renderOpeningHours(day.label);
       return `
         <div class="day-card">
           <div class="day-header">
             <div class="day-of-week">${dow}</div>
             <div class="day-date">${date}</div>
           </div>
+          <div class="card-section-label">Ferry &mdash; Vehicle Availability</div>
           <div class="directions-grid">${cols}</div>
+          ${openingHours}
         </div>`;
     }).join('');
 
