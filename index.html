@@ -75,6 +75,15 @@
       margin-top: 2px;
     }
 
+    /* ── Weather summary line ────────────────────────────── */
+    .weather-summary {
+      font-size: 0.82rem;
+      color: #555;
+      padding: 7px 18px 7px;
+      border-top: 1px solid #e4e6ee;
+      font-style: italic;
+    }
+
     /* ── Section dividers inside each card ───────────────── */
     .card-section-label {
       font-size: 0.68rem;
@@ -184,6 +193,7 @@
 </main>
 
 <footer>
+  Weather from <a href="https://www.weather.gov" target="_blank" rel="noopener">weather.gov</a>.
   Ferry data from <a href="https://www.fiferry.com" target="_blank" rel="noopener">fiferry.com</a>.
   Doctor&rsquo;s hours from <a href="https://islandhealthproject.com" target="_blank" rel="noopener">islandhealthproject.com</a>.
   Waste Management hours from <a href="https://fiwmd.net" target="_blank" rel="noopener">fiwmd.net</a>.
@@ -220,9 +230,18 @@
     return { dow: label.slice(0, comma), date: label.slice(comma + 2) };
   }
 
-  // ── Doctor's office hours (loaded from hours.json) ────────
-  // hoursData is populated after hours.json fetch; used by getDoctorHours().
+  // ── Opening hours (loaded from hours.json) ─────────────
   let _hoursData = null;
+
+  // ── Weather (loaded from weather.json) ──────────────────
+  let _weatherData = null;
+
+  function renderWeather(date) {
+    if (!_weatherData || !_weatherData.days) return '';
+    const summary = _weatherData.days[_dateStr(date)];
+    if (!summary) return '';
+    return `<div class="weather-summary">${summary}</div>`;
+  }
 
   function _dateStr(d) {
     // "YYYY-MM-DD" in local time — avoids UTC-offset edge cases
@@ -310,6 +329,7 @@
       const { dow, date } = splitLabel(day.label);
       const cols = (day.directions || []).map(renderDirection).join('');
       const dayDate = labelToDate(day.label);
+      const weather = dayDate ? renderWeather(dayDate) : '';
       const openingHours = dayDate ? renderOpeningHours(dayDate) : '';
       return `
         <div class="day-card">
@@ -317,6 +337,7 @@
             <div class="day-of-week">${dow}</div>
             <div class="day-date">${date}</div>
           </div>
+          ${weather}
           <div class="card-section-label">Ferry &mdash; Vehicle Availability</div>
           <div class="directions-grid">${cols}</div>
           ${openingHours}
@@ -330,9 +351,11 @@
   Promise.all([
     fetch('schedule.json' + _ts).then(r => { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); }),
     fetch('hours.json'   + _ts).then(r => r.json()).catch(() => null),
+    fetch('weather.json' + _ts).then(r => r.json()).catch(() => null),
   ])
-    .then(([schedule, hours]) => {
-      _hoursData = hours;   // make hours available to getDoctorHours()
+    .then(([schedule, hours, weather]) => {
+      _hoursData   = hours;
+      _weatherData = weather;
       renderSchedule(schedule);
     })
     .catch(() => {

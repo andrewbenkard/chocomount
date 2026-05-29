@@ -36,11 +36,14 @@ jobs:
       - name: Fetch opening hours
         run: python fetch_hours.py
 
+      - name: Fetch weather forecast
+        run: python fetch_weather.py
+
       - name: Commit updated data files
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add schedule.json hours.json
+          git add schedule.json hours.json weather.json
           if git diff --cached --quiet; then
             echo "No changes to data files — skipping commit."
           else
