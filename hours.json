@@ -167,6 +167,26 @@
           ]
         }
       ]
+    },
+    {
+      "name": "Library",
+      "url": "https://filibrary.org/",
+      "schedules": [
+        {
+          "label": "Spring Hours",
+          "start_date": "",
+          "end_date": "",
+          "hours_by_dow": [
+            "Closed",
+            "1–5pm",
+            "1–7pm",
+            "1–5pm",
+            "1–7pm",
+            "1–5pm",
+            "9am–12pm"
+          ]
+        }
+      ]
     }
   ]
 }

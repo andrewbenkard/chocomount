@@ -7,6 +7,7 @@ Sources:
   • Doctor's Office  → https://islandhealthproject.com/
   • Transfer Station → https://fiwmd.net/
   • Compost Station  → https://fiwmd.net/
+  • Library          → https://filibrary.org/
 
 Output structure:
 {
@@ -140,6 +141,34 @@ WMD_FALLBACK_COMPOST = {
                 "12:30\u2009PM\u2013\u20094:00\u2009PM",   # Sat
             ],
             "holiday_closings": WMD_HOLIDAY_FALLBACK,
+        }
+    ],
+}
+
+# ── Library (Fishers Island Library) ─────────────────────────────────────────
+# Source: https://filibrary.org/
+# The page shows a season label ("Spring Hours", "Summer Hours", etc.)
+# which changes during the year.  The fallback reflects Spring Hours.
+LIBRARY_URL = "https://filibrary.org/"
+
+LIBRARY_FALLBACK = {
+    "name": "Library",
+    "url":  LIBRARY_URL,
+    "schedules": [
+        {
+            "label":      "Spring Hours",
+            "start_date": "",
+            "end_date":   "",
+            # 0=Sun … 6=Sat
+            "hours_by_dow": [
+                "Closed",         # Sun
+                "1\u20135pm",     # Mon
+                "1\u20137pm",     # Tue
+                "1\u20135pm",     # Wed
+                "1\u20137pm",     # Thu
+                "1\u20135pm",     # Fri
+                "9am\u201312pm",  # Sat
+            ],
         }
     ],
 }
@@ -356,6 +385,132 @@ def parse_wmd_html(html: str) -> dict | None:
 
 
 # ════════════════════════════════════════════════════════════════════════════
+# Library parser  (filibrary.org — free-text, NOT table-based)
+# ════════════════════════════════════════════════════════════════════════════
+
+# Day abbreviations → DOW index (0=Sun … 6=Sat)
+# Longer forms listed first so word-boundary regex works correctly
+# (e.g. "tues" must not match the shorter "tue" alias).
+_LIB_DAY_MAP: dict[str, int] = {
+    "monday": 1,    "mon": 1,
+    "tuesday": 2,   "tues": 2,  "tue": 2,
+    "wednesday": 3, "wed": 3,
+    "thursday": 4,  "thurs": 4, "thu": 4,
+    "friday": 5,    "fri": 5,
+    "saturday": 6,  "sat": 6,
+    "sunday": 0,    "sun": 0,
+}
+
+_LIB_SEASON_PAT = re.compile(
+    r'\b(spring|summer|fall|autumn|winter|year[- ]?round)\s+hours?\b',
+    re.IGNORECASE,
+)
+
+_LIB_TIME_PAT = re.compile(
+    r'\d{1,2}(?::\d{2})?\s*(?:am|pm)\s*[-\u2013\u2014]\s*\d{1,2}(?::\d{2})?\s*(?:am|pm)',
+    re.IGNORECASE,
+)
+
+
+def parse_library_html(html: str) -> dict | None:
+    """
+    Parse filibrary.org free-text HTML.
+
+    The page uses a structure like:
+        <em>Spring Hours:</em>
+        <strong>Mon, Wed, Fri</strong> 1-5pm | <strong>Tues, Thurs</strong> 1-7pm
+        <strong>Sat</strong> 9am-12pm
+        <strong>Sunday</strong> Closed unless for scheduled event.
+
+    Returns a business dict (ready for hours.json) or None on failure.
+    Works for any season label the page might carry (Spring, Summer, …).
+    """
+    from html import unescape as _unescape
+
+    # Replace <br> variants with newlines before stripping tags
+    text = re.sub(r'<br\s*/?>', '\n', html, flags=re.IGNORECASE)
+    # Strip all remaining HTML tags
+    text = re.sub(r'<[^>]+>', ' ', text)
+    text = _unescape(text)
+
+    lines = [ln.strip() for ln in text.splitlines()]
+    lines = [ln for ln in lines if ln]
+
+    # Locate the first season label
+    start_idx = None
+    season_label = "Season Hours"
+    for i, line in enumerate(lines):
+        m = _LIB_SEASON_PAT.search(line)
+        if m:
+            start_idx = i
+            season_label = m.group(0).title()
+            break
+
+    if start_idx is None:
+        return None
+
+    # Collect up to 12 lines after the season label as the schedule block;
+    # stop early if we hit another season label.
+    schedule_lines: list[str] = []
+    for line in lines[start_idx + 1 : start_idx + 13]:
+        if _LIB_SEASON_PAT.search(line):
+            break
+        schedule_lines.append(line)
+
+    dow: dict[int, str] = {}
+
+    for line in schedule_lines:
+        # Split on pipe: "Mon, Wed, Fri 1-5pm | Tues, Thurs 1-7pm"
+        for part in line.split('|'):
+            part = part.strip()
+            if not part:
+                continue
+
+            # Find all day-of-week indices mentioned in this segment.
+            found: list[int] = []
+            for abbrev, idx in _LIB_DAY_MAP.items():
+                if idx in found:
+                    continue
+                if re.search(r'\b' + re.escape(abbrev) + r'\b', part, re.IGNORECASE):
+                    found.append(idx)
+
+            if not found:
+                continue
+
+            # Determine the time value for these days.
+            time_m = _LIB_TIME_PAT.search(part)
+            if time_m:
+                raw = time_m.group(0)
+                raw = re.sub(r'\s+', '', raw)              # strip internal spaces
+                raw = re.sub(r'[-\u2013\u2014]', '\u2013', raw)  # normalise to en-dash
+                time_val = raw
+            elif re.search(r'\bclosed\b', part, re.IGNORECASE):
+                time_val = "Closed"
+            else:
+                continue  # unrecognised format; skip segment
+
+            for d in found:
+                if d not in dow:  # first occurrence wins
+                    dow[d] = time_val
+
+    if not dow:
+        return None
+
+    hours_by_dow = [dow.get(i, "Closed") for i in range(7)]
+
+    return {
+        "name": "Library",
+        "url":  LIBRARY_URL,
+        "schedules": [{
+            "label":        season_label,
+            "start_date":   "",
+            "end_date":     "",
+            "hours_by_dow": hours_by_dow,
+        }],
+    }
+
+
+# ════════════════════════════════════════════════════════════════════════════
 # Playwright fetch
 # ════════════════════════════════════════════════════════════════════════════
 
@@ -428,9 +583,25 @@ def main():
         businesses.append(WMD_FALLBACK_TRANSFER)
         businesses.append(WMD_FALLBACK_COMPOST)
 
+    # ── Library (filibrary.org) ───────────────────────────────────────────────
+    print("Fetching Library (filibrary.org) …", flush=True)
+    lib_fallback = False
+    try:
+        html = asyncio.run(_fetch(LIBRARY_URL))
+        biz = parse_library_html(html)
+        if biz:
+            print(f"  ✓ Library hours parsed: {biz['schedules'][0]['label']}", flush=True)
+            businesses.append(biz)
+        else:
+            raise ValueError("no library hours parsed")
+    except Exception as e:
+        print(f"  ⚠ Library failed ({e}) — using fallback", flush=True)
+        lib_fallback = True
+        businesses.append(LIBRARY_FALLBACK)
+
     data = {
         "fetched_at":    now_iso,
-        "used_fallback": ihp_fallback or wmd_fallback,
+        "used_fallback": ihp_fallback or wmd_fallback or lib_fallback,
         "businesses":    businesses,
     }
 
