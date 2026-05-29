@@ -1,0 +1,40 @@
+{
+  "fetched_at": "2026-05-29T12:18:58Z",
+  "used_fallback": true,
+  "businesses": [
+    {
+      "name": "Doctor's Office",
+      "url": "https://islandhealthproject.com/",
+      "schedules": [
+        {
+          "label": "Off Peak",
+          "start_date": "2025-09-06",
+          "end_date": "2026-06-21",
+          "hours_by_dow": [
+            "Closed",
+            "5–7pm",
+            "9am–12pm",
+            "Closed",
+            "9am–12pm",
+            "9am–12pm",
+            "Closed"
+          ]
+        },
+        {
+          "label": "Peak",
+          "start_date": "2026-06-22",
+          "end_date": "2026-09-07",
+          "hours_by_dow": [
+            "Closed",
+            "9am–12pm & 1–4pm",
+            "9am–12:30pm",
+            "9am–12pm & 1–4pm",
+            "9am–12:30pm",
+            "9am–12:30pm",
+            "9am–12:30pm"
+          ]
+        }
+      ]
+    }
+  ]
+}

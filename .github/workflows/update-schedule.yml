@@ -1,4 +1,4 @@
-name: Update Ferry Schedule
+name: Update Ferry Schedule and Opening Hours
 
 on:
   # Run automatically twice a day (Eastern Time: 6 AM and 2 PM)
@@ -27,20 +27,23 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install playwright
+          pip install playwright beautifulsoup4
           playwright install chromium --with-deps
 
       - name: Fetch ferry schedule
         run: python fetch_schedule.py
 
-      - name: Commit updated schedule
+      - name: Fetch opening hours
+        run: python fetch_hours.py
+
+      - name: Commit updated data files
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add schedule.json
+          git add schedule.json hours.json
           if git diff --cached --quiet; then
-            echo "No changes to schedule.json — skipping commit."
+            echo "No changes to data files — skipping commit."
           else
-            git commit -m "chore: update ferry schedule [$(date -u +'%Y-%m-%d %H:%M UTC')]"
+            git commit -m "chore: update data files [$(date -u +'%Y-%m-%d %H:%M UTC')]"
             git push
           fi
