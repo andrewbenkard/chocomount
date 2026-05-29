@@ -8,6 +8,7 @@ Sources:
   • Transfer Station → https://fiwmd.net/
   • Compost Station  → https://fiwmd.net/
   • Library          → https://filibrary.org/
+  • Village Market   → https://fishersisland.net/listing/village-market/
 
 Output structure:
 {
@@ -37,7 +38,7 @@ Output structure:
 import asyncio
 import json
 import re
-from datetime import datetime, timezone
+from datetime import date, datetime, timezone
 from html.parser import HTMLParser
 
 from playwright.async_api import async_playwright
@@ -170,6 +171,62 @@ LIBRARY_FALLBACK = {
                 "9am\u201312pm",  # Sat
             ],
         }
+    ],
+}
+
+
+# ── Village Market ───────────────────────────────────────────────────────────
+# Source: https://fishersisland.net/listing/village-market/
+# Page carries two seasonal schedules (Winter / Summer) and announces holiday
+# closings with "HOLIDAY HOURS to follow" — no explicit dates, so we use the
+# standard US federal holidays as a conservative fallback.
+VM_URL = "https://fishersisland.net/listing/village-market/"
+
+VM_HOLIDAY_FALLBACK = [
+    {"date": "2026-01-01",  "name": "New Year\u2019s Day"},
+    {"date": "2026-05-25",  "name": "Memorial Day"},
+    {"date": "2026-07-04",  "name": "Independence Day"},
+    {"date": "2026-09-07",  "name": "Labor Day"},
+    {"date": "2026-11-26",  "name": "Thanksgiving Day"},
+    {"date": "2026-12-25",  "name": "Christmas Day"},
+]
+
+# Summer schedule is listed first so getBusinessHours() matches it during the
+# summer window before falling through to the always-active Winter schedule.
+VM_FALLBACK = {
+    "name": "Village Market",
+    "url":  VM_URL,
+    "schedules": [
+        {
+            "label":      "Summer",
+            "start_date": "2026-06-13",   # approximate; updated by scraper
+            "end_date":   "2026-08-30",
+            "hours_by_dow": [
+                "Closed",                  # Sun
+                "7:30AM\u20135:00PM",      # Mon
+                "7:30AM\u20135:00PM",      # Tue
+                "7:30AM\u20135:00PM",      # Wed
+                "7:30AM\u20135:00PM",      # Thu
+                "7:30AM\u20135:00PM",      # Fri
+                "7:30AM\u20135:00PM",      # Sat
+            ],
+            "holiday_closings": VM_HOLIDAY_FALLBACK,
+        },
+        {
+            "label":      "Winter",
+            "start_date": "",
+            "end_date":   "",
+            "hours_by_dow": [
+                "Closed",                                    # Sun
+                "7:30AM\u20131:00PM & 3:00PM\u20135:00PM",  # Mon
+                "7:30AM\u20131:00PM & 3:00PM\u20135:00PM",  # Tue
+                "7:30AM\u20131:00PM & 3:00PM\u20135:00PM",  # Wed
+                "7:30AM\u20131:00PM & 3:00PM\u20135:00PM",  # Thu
+                "7:30AM\u20131:00PM & 3:00PM\u20135:00PM",  # Fri
+                "7:30AM\u20131:00PM & 3:00PM\u20135:00PM",  # Sat
+            ],
+            "holiday_closings": VM_HOLIDAY_FALLBACK,
+        },
     ],
 }
 
@@ -511,6 +568,208 @@ def parse_library_html(html: str) -> dict | None:
 
 
 # ════════════════════════════════════════════════════════════════════════════
+# Village Market parser  (fishersisland.net listing — table-based)
+# ════════════════════════════════════════════════════════════════════════════
+
+_VM_SEASON_PAT = re.compile(
+    r'\b(summer|winter|spring|fall|autumn|year[- ]?round)\b\s*hours?',
+    re.IGNORECASE,
+)
+
+# Day abbreviations used in the VM table headers → DOW index (0=Sun … 6=Sat)
+_VM_DAY_ABBR: dict[str, int] = {
+    "SUN": 0,  "SUNDAY": 0,
+    "MON": 1,  "MONDAY": 1,
+    "TUE": 2,  "TUES": 2,  "TUESDAY": 2,
+    "WED": 3,  "WEDNESDAY": 3,
+    "THU": 4,  "THURS": 4, "THURSDAY": 4,
+    "FRI": 5,  "FRIDAY": 5,
+    "SAT": 6,  "SATURDAY": 6,
+}
+
+
+def _expand_vm_days(cell: str) -> list[int]:
+    """
+    Expand a day-range cell string to a list of DOW indices.
+    "MON-SAT" → [1,2,3,4,5,6];  "SUNDAY" → [0];  "MON" → [1]; etc.
+    Returns [] if the cell doesn't look like a day name or range.
+    """
+    # Strip non-word chars (handles en-dash, hyphen, commas …)
+    tokens = re.sub(r'[^\w]+', ' ', cell.strip().upper()).split()
+    if not tokens:
+        return []
+    a = _VM_DAY_ABBR.get(tokens[0])
+    if a is None:
+        return []
+    if len(tokens) == 1:
+        return [a]
+    b = _VM_DAY_ABBR.get(tokens[-1])
+    if b is None:
+        return [a]
+    # Expand range a..b (handles Sun=0 wrapping if needed)
+    if a <= b:
+        return list(range(a, b + 1))
+    return list(range(a, 7)) + list(range(0, b + 1))
+
+
+def _normalize_vm_time(s: str) -> str | None:
+    """
+    Return a normalised time string, "Closed", or None if not time-like.
+    """
+    s = " ".join(s.split())
+    if re.search(r'\bclosed\b', s, re.IGNORECASE):
+        return "Closed"
+    if not re.search(r'\d{1,2}(?::\d{2})?\s*[AaPp][Mm]', s):
+        return None  # not a time value (e.g. "Papers available…")
+    # Normalise surrounding whitespace on dashes/en-dashes
+    return re.sub(r'\s*[-\u2013\u2014]\s*', '\u2013', s)
+
+
+def _vm_parse_yearless_range(text: str):
+    """
+    Parse a date range that lacks an explicit year, e.g.
+    "SATURDAY, JUNE 17 – SATURDAY, AUGUST 30".
+    Infers the year: uses the current year unless that start date is more
+    than 60 days in the past (in which case uses next year).
+    Returns (start_YYYY-MM-DD, end_YYYY-MM-DD) or (None, None).
+    """
+    text = re.sub(r'[\u2013\u2014\u2212]', '-', text)   # normalise dashes
+    # Match: optional "DAYOFWEEK," MONTH DAY - optional "DAYOFWEEK," MONTH DAY
+    m = re.search(
+        r'(?:[A-Za-z]+,?\s+)?([A-Za-z]+)\s+(\d{1,2})'   # start: MONTH DAY
+        r'\s*-\s*'
+        r'(?:[A-Za-z]+,?\s+)?([A-Za-z]+)\s+(\d{1,2})',  # end:   MONTH DAY
+        text,
+    )
+    if not m:
+        return None, None
+    sm = _MONTH.get(m.group(1).lower())
+    sd = int(m.group(2))
+    em = _MONTH.get(m.group(3).lower())
+    ed = int(m.group(4))
+    if not sm or not em:
+        return None, None
+
+    today = datetime.now(timezone.utc).date()
+    yr = today.year
+    try:
+        cand = date(yr, sm, sd)
+        if (cand - today).days < -60:
+            yr += 1
+        end_yr = yr if em >= sm else yr + 1
+        return date(yr, sm, sd).strftime("%Y-%m-%d"), date(end_yr, em, ed).strftime("%Y-%m-%d")
+    except ValueError:
+        return None, None
+
+
+def parse_village_market_html(html: str) -> dict | None:
+    """
+    Parse Village Market seasonal hours from the fishersisland.net listing page.
+
+    Page structure (h5 heading → table):
+      "WINTER HOURS AS OF TUESDAY, SEPTEMBER 2"
+        MON-SAT  | 7:30 AM – 1:00 PM
+                 | 3:00 PM – 5:00 PM    ← continuation row
+        SUNDAY   | CLOSED
+
+      "SUMMER HOURS"
+                 | SATURDAY, JUNE 17 – SATURDAY, AUGUST 30   ← date-range row
+        MON-SAT  | 7:30 AM – 5:00 PM
+        SUNDAY   | CLOSED
+
+    Returns a business dict or None on failure.
+    Summer schedule is placed first so it takes priority during its date window.
+    """
+    p = _TableParser()
+    p.feed(html)
+
+    parsed: dict[str, dict] = {}   # label → schedule dict
+
+    for sec in p.sections:
+        heading = sec["heading"]
+        sm = _VM_SEASON_PAT.search(heading)
+        if not sm:
+            continue
+        label = sm.group(1).capitalize()   # "Summer", "Winter", …
+        rows = sec["rows"]
+        if not rows:
+            continue
+
+        # ── Extract date range ──────────────────────────────────────────────
+        start_date = end_date = ""
+
+        # Try rows first: a row with an empty first cell and a date-like second
+        # cell is a date-range row (e.g. summer's "SATURDAY, JUNE 17 – …").
+        for row in rows:
+            if len(row) < 2:
+                continue
+            cell0, cell1 = row[0].strip(), row[1].strip()
+            if not cell0 or not _expand_vm_days(cell0):
+                s, e = _vm_parse_yearless_range(cell1)
+                if not s:
+                    s, e = _parse_date_range(cell1)  # fallback: try full-year format
+                if s:
+                    start_date, end_date = s, (e or "")
+                    break   # found it
+
+        # ── Parse day-hours ─────────────────────────────────────────────────
+        dow: dict[int, str] = {}
+        last_days: list[int] = []
+
+        for row in rows:
+            if len(row) < 2:
+                continue
+            cell0, cell1 = row[0].strip(), row[1].strip()
+
+            if cell0:
+                days = _expand_vm_days(cell0)
+                if not days:
+                    continue   # date-range or header row — skip
+                last_days = days
+                time_val = _normalize_vm_time(cell1)
+                if time_val:
+                    for d in days:
+                        dow[d] = time_val
+            else:
+                # Continuation row: appends another time slot to the same days
+                if last_days:
+                    time_val = _normalize_vm_time(cell1)
+                    if time_val and time_val != "Closed":
+                        for d in last_days:
+                            if d in dow:
+                                dow[d] = f"{dow[d]} & {time_val}"
+                            else:
+                                dow[d] = time_val
+
+        if not dow:
+            continue
+
+        parsed[label] = {
+            "label":            label,
+            "start_date":       start_date,
+            "end_date":         end_date,
+            "hours_by_dow":     [dow.get(i, "Closed") for i in range(7)],
+            "holiday_closings": VM_HOLIDAY_FALLBACK,
+        }
+
+    if not parsed:
+        return None
+
+    # Schedules with explicit date ranges go first so they shadow the
+    # always-active Winter fallback during their window.
+    schedules = sorted(
+        parsed.values(),
+        key=lambda s: (not bool(s["start_date"]), s["label"]),
+    )
+
+    return {
+        "name":      "Village Market",
+        "url":       VM_URL,
+        "schedules": schedules,
+    }
+
+
+# ════════════════════════════════════════════════════════════════════════════
 # Playwright fetch
 # ════════════════════════════════════════════════════════════════════════════
 
@@ -599,9 +858,26 @@ def main():
         lib_fallback = True
         businesses.append(LIBRARY_FALLBACK)
 
+    # ── Village Market (fishersisland.net) ───────────────────────────────────
+    print("Fetching Village Market (fishersisland.net) …", flush=True)
+    vm_fallback = False
+    try:
+        html = asyncio.run(_fetch(VM_URL))
+        biz = parse_village_market_html(html)
+        if biz:
+            labels = [s["label"] for s in biz["schedules"]]
+            print(f"  ✓ Village Market schedules parsed: {labels}", flush=True)
+            businesses.append(biz)
+        else:
+            raise ValueError("no Village Market schedules parsed")
+    except Exception as e:
+        print(f"  ⚠ Village Market failed ({e}) — using fallback", flush=True)
+        vm_fallback = True
+        businesses.append(VM_FALLBACK)
+
     data = {
         "fetched_at":    now_iso,
-        "used_fallback": ihp_fallback or wmd_fallback or lib_fallback,
+        "used_fallback": ihp_fallback or wmd_fallback or lib_fallback or vm_fallback,
         "businesses":    businesses,
     }
 

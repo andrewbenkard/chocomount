@@ -187,6 +187,50 @@
           ]
         }
       ]
+    },
+    {
+      "name": "Village Market",
+      "url": "https://fishersisland.net/listing/village-market/",
+      "schedules": [
+        {
+          "label": "Summer",
+          "start_date": "2026-06-13",
+          "end_date": "2026-08-30",
+          "hours_by_dow": [
+            "Closed",
+            "7:30AM–5:00PM",
+            "7:30AM–5:00PM",
+            "7:30AM–5:00PM",
+            "7:30AM–5:00PM",
+            "7:30AM–5:00PM",
+            "7:30AM–5:00PM"
+          ],
+          "holiday_closings": [
+            {"date": "2026-07-04", "name": "Independence Day"},
+            {"date": "2026-09-07", "name": "Labor Day"}
+          ]
+        },
+        {
+          "label": "Winter",
+          "start_date": "",
+          "end_date": "",
+          "hours_by_dow": [
+            "Closed",
+            "7:30AM–1:00PM & 3:00PM–5:00PM",
+            "7:30AM–1:00PM & 3:00PM–5:00PM",
+            "7:30AM–1:00PM & 3:00PM–5:00PM",
+            "7:30AM–1:00PM & 3:00PM–5:00PM",
+            "7:30AM–1:00PM & 3:00PM–5:00PM",
+            "7:30AM–1:00PM & 3:00PM–5:00PM"
+          ],
+          "holiday_closings": [
+            {"date": "2026-01-01", "name": "New Year's Day"},
+            {"date": "2026-05-25", "name": "Memorial Day"},
+            {"date": "2026-11-26", "name": "Thanksgiving Day"},
+            {"date": "2026-12-25", "name": "Christmas Day"}
+          ]
+        }
+      ]
     }
   ]
 }
