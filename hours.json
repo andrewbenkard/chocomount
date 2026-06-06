@@ -1,6 +1,6 @@
 {
-  "fetched_at": "2026-06-05T20:53:03Z",
-  "used_fallback": false,
+  "fetched_at": "2026-06-06T12:07:54Z",
+  "used_fallback": true,
   "businesses": [
     {
       "name": "Transfer Station",
@@ -160,16 +160,16 @@
       "schedules": [
         {
           "label": "Summer",
-          "start_date": "2026-06-17",
+          "start_date": "2026-06-13",
           "end_date": "2026-08-30",
           "hours_by_dow": [
             "Closed",
-            "7:30 AM–5:00 PM",
-            "7:30 AM–5:00 PM",
-            "7:30 AM–5:00 PM",
-            "7:30 AM–5:00 PM",
-            "7:30 AM–5:00 PM",
-            "7:30 AM–5:00 PM"
+            "7:30AM–5:00PM",
+            "7:30AM–5:00PM",
+            "7:30AM–5:00PM",
+            "7:30AM–5:00PM",
+            "7:30AM–5:00PM",
+            "7:30AM–5:00PM"
           ],
           "holiday_closings": [
             {
@@ -204,12 +204,12 @@
           "end_date": "",
           "hours_by_dow": [
             "Closed",
-            "7:30 AM–1:00 PM & 3:00 PM–5:00 PM",
-            "7:30 AM–1:00 PM & 3:00 PM–5:00 PM",
-            "7:30 AM–1:00 PM & 3:00 PM–5:00 PM",
-            "7:30 AM–1:00 PM & 3:00 PM–5:00 PM",
-            "7:30 AM–1:00 PM & 3:00 PM–5:00 PM",
-            "7:30 AM–1:00 PM & 3:00 PM–5:00 PM"
+            "7:30AM–1:00PM & 3:00PM–5:00PM",
+            "7:30AM–1:00PM & 3:00PM–5:00PM",
+            "7:30AM–1:00PM & 3:00PM–5:00PM",
+            "7:30AM–1:00PM & 3:00PM–5:00PM",
+            "7:30AM–1:00PM & 3:00PM–5:00PM",
+            "7:30AM–1:00PM & 3:00PM–5:00PM"
           ],
           "holiday_closings": [
             {
