@@ -46,6 +46,58 @@ from html.parser import HTMLParser
 from playwright.async_api import async_playwright
 
 # ════════════════════════════════════════════════════════════════════════════
+# Time-string normalisation
+# ════════════════════════════════════════════════════════════════════════════
+
+def _norm_token(s: str) -> str:
+    """Normalise one time token: '9am' → '9:00 am', '12:30PM' → '12:30 pm'."""
+    s = s.strip()
+    s = re.sub(r'(\d)(am|pm)', r'\1 \2', s, flags=re.IGNORECASE)
+    s = re.sub(r'(am|pm)', lambda m: m.group().lower(), s, flags=re.IGNORECASE)
+    s = re.sub(r'^(\d{1,2})\s+(am|pm)$', r'\1:00 \2', s)
+    return s
+
+
+def _norm_range(s: str) -> str:
+    """Normalise one time range: '9am-12pm' → '9:00 am – 12:00 pm'."""
+    s = s.strip()
+    m = re.match(
+        r'^([\d:]+\s*(?:am|pm)?)\s*[-\u2013\u2014]\s*([\d:]+\s*(?:am|pm)?)$',
+        s, re.IGNORECASE,
+    )
+    if not m:
+        return s
+    start, end = m.group(1).strip(), m.group(2).strip()
+    end_ap   = re.search(r'(am|pm)', end,   re.IGNORECASE)
+    start_ap = re.search(r'(am|pm)', start, re.IGNORECASE)
+    if end_ap and not start_ap:
+        start = start + end_ap.group(1).lower()
+    return _norm_token(start) + ' \u2013 ' + _norm_token(end)
+
+
+def normalize_hours(s: str) -> str:
+    """
+    Normalise any hours string to standard display format:
+      • am/pm lowercase    • spaces around en-dash
+      • :00 for bare hours • sentence-case "Closed"
+      • fix merged ranges  e.g. '9am-12pm1pm-4pm' → '9:00 am – 12:00 pm & 1:00 pm – 4:00 pm'
+
+    Examples:
+      '9am-12pm'     → '9:00 am – 12:00 pm'
+      '1-5pm'        → '1:00 pm – 5:00 pm'
+      '7:30 AM–5 PM' → '7:30 am – 5:00 pm'
+      'CLOSED'       → 'Closed'
+    """
+    # Collapse thin-space / narrow-no-break-space / non-breaking-space to regular space
+    s = re.sub(r'[\u2009\u202f\u00a0]', ' ', s)
+    if re.match(r'^\s*closed\s*$', s, re.IGNORECASE):
+        return "Closed"
+    s = re.sub(r'(am|pm)(\d)', r'\1 & \2', s, flags=re.IGNORECASE)
+    parts = [p.strip() for p in s.split('&')]
+    return ' & '.join(_norm_range(p) for p in parts)
+
+
+# ════════════════════════════════════════════════════════════════════════════
 # Fallback data
 # ════════════════════════════════════════════════════════════════════════════
 
@@ -936,6 +988,13 @@ def main():
             "url":       IHP_URL,
             "schedules": IHP_FALLBACK_SCHEDULES,
         })
+
+    # Normalise all hours_by_dow strings regardless of source
+    for biz in businesses:
+        for sched in biz.get("schedules", []):
+            sched["hours_by_dow"] = [
+                normalize_hours(h) for h in sched["hours_by_dow"]
+            ]
 
     data = {
         "fetched_at":    now_iso,
