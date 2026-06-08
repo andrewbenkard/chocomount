@@ -1,4 +1,15 @@
 {
-  "fetched_at": "2026-06-08T16:06:16Z",
-  "days": {}
+  "fetched_at": "2026-06-08T16:17:42Z",
+  "days": {
+    "2026-06-08": "Overcast, 64°F",
+    "2026-06-09": "Overcast, 64°F",
+    "2026-06-10": "Light showers, 70°F",
+    "2026-06-11": "Showers, 76°F",
+    "2026-06-12": "Overcast, 75°F",
+    "2026-06-13": "Overcast, 69°F",
+    "2026-06-14": "Light drizzle, 77°F",
+    "2026-06-15": "Overcast, 70°F",
+    "2026-06-16": "Light drizzle, 64°F",
+    "2026-06-17": "Light drizzle, 72°F"
+  }
 }
