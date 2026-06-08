@@ -241,6 +241,27 @@
       ]
     },
     {
+      "name": "Beach Plum",
+      "url": "https://fishersisland.net/listing/beach-plum/",
+      "schedules": [
+        {
+          "label": "Regular",
+          "start_date": "",
+          "end_date": "",
+          "hours_by_dow": [
+            "Closed",
+            "10:00 am – 1:00 pm & 3:00 – 5:00 pm",
+            "10:00 am – 1:00 pm & 3:00 – 5:00 pm",
+            "10:00 am – 1:00 pm & 3:00 – 5:00 pm",
+            "10:00 am – 1:00 pm & 3:00 – 5:00 pm",
+            "10:00 am – 1:00 pm & 3:00 – 5:00 pm",
+            "10:00 am – 1:00 pm & 3:00 – 5:00 pm"
+          ],
+          "holiday_closings": []
+        }
+      ]
+    },
+    {
       "name": "West End Cafe",
       "url": "https://www.westendfi.com/",
       "schedules": [

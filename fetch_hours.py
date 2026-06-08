@@ -10,6 +10,7 @@ Sources:
   • Library          → https://filibrary.org/
   • Village Market   → https://fishersisland.net/listing/village-market/
   • West End Cafe    → https://www.westendfi.com/  (hardcoded – site structure unknown)
+  • Beach Plum       → https://fishersisland.net/listing/beach-plum/  (hardcoded – hours confirmed by user)
 
 Output structure:
 {
@@ -47,6 +48,32 @@ from playwright.async_api import async_playwright
 # ════════════════════════════════════════════════════════════════════════════
 # Fallback data
 # ════════════════════════════════════════════════════════════════════════════
+
+# ── Beach Plum ────────────────────────────────────────────────────────────────
+BEACH_PLUM_URL = "https://fishersisland.net/listing/beach-plum/"
+
+BEACH_PLUM_BUSINESS = {
+    "name": "Beach Plum",
+    "url":  BEACH_PLUM_URL,
+    "schedules": [
+        {
+            "label": "Regular",
+            "start_date": "",
+            "end_date": "",
+            # 0=Sun … 6=Sat
+            "hours_by_dow": [
+                "Closed",                                              # Sun
+                "10:00 am \u2013 1:00 pm & 3:00 \u2013 5:00 pm",    # Mon
+                "10:00 am \u2013 1:00 pm & 3:00 \u2013 5:00 pm",    # Tue
+                "10:00 am \u2013 1:00 pm & 3:00 \u2013 5:00 pm",    # Wed
+                "10:00 am \u2013 1:00 pm & 3:00 \u2013 5:00 pm",    # Thu
+                "10:00 am \u2013 1:00 pm & 3:00 \u2013 5:00 pm",    # Fri
+                "10:00 am \u2013 1:00 pm & 3:00 \u2013 5:00 pm",    # Sat
+            ],
+            "holiday_closings": [],
+        }
+    ],
+}
 
 # ── West End Cafe ─────────────────────────────────────────────────────────────
 WEST_END_URL = "https://www.westendfi.com/"
@@ -877,6 +904,10 @@ def main():
         print(f"  ⚠ Village Market failed ({e}) — using fallback", flush=True)
         vm_fallback = True
         businesses.append(VM_FALLBACK)
+
+    # ── Beach Plum (hardcoded) ────────────────────────────────────────────────
+    print("Adding Beach Plum (hardcoded hours) …", flush=True)
+    businesses.append(BEACH_PLUM_BUSINESS)
 
     # ── West End Cafe (hardcoded) ─────────────────────────────────────────────
     print("Adding West End Cafe (hardcoded hours) …", flush=True)
