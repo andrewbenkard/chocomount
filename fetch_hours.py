@@ -518,7 +518,7 @@ _LIB_SEASON_PAT = re.compile(
 )
 
 _LIB_TIME_PAT = re.compile(
-    r'\d{1,2}(?::\d{2})?\s*(?:am|pm)\s*[-\u2013\u2014]\s*\d{1,2}(?::\d{2})?\s*(?:am|pm)',
+    r'\d{1,2}(?::\d{2})?\s*(?:am|pm)?\s*[-\u2013\u2014]\s*\d{1,2}(?::\d{2})?\s*(?:am|pm)',
     re.IGNORECASE,
 )
 

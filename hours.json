@@ -144,11 +144,11 @@
           "end_date": "",
           "hours_by_dow": [
             "Closed",
-            "Closed",
-            "Closed",
-            "Closed",
-            "Closed",
-            "Closed",
+            "1–5pm",
+            "1–7pm",
+            "1–5pm",
+            "1–7pm",
+            "1–5pm",
             "9am–12pm"
           ]
         }
