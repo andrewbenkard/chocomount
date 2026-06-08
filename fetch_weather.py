@@ -16,6 +16,8 @@ Output structure:
 """
 
 import json
+import sys
+import traceback
 import urllib.request
 from datetime import datetime, timezone
 
@@ -69,11 +71,17 @@ def main():
         data = fetch_forecast()
         print(f"  ✓ {len(data['days'])} day(s) of forecast written", flush=True)
     except Exception as e:
-        print(f"  ⚠ Weather fetch failed ({e}) — writing empty fallback", flush=True)
+        print(f"  ⚠ Weather fetch failed: {e}", flush=True)
+        traceback.print_exc()
         data = {
             "fetched_at": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
             "days": {},
         }
+        # Write the fallback, then exit non-zero so the error is visible in Actions logs.
+        with open("weather.json", "w", encoding="utf-8") as f:
+            json.dump(data, f, indent=2, ensure_ascii=False)
+        print("✓ weather.json written (empty fallback)", flush=True)
+        sys.exit(1)
 
     with open("weather.json", "w", encoding="utf-8") as f:
         json.dump(data, f, indent=2, ensure_ascii=False)

@@ -41,6 +41,7 @@ jobs:
 
       - name: Fetch weather forecast
         run: python fetch_weather.py
+        continue-on-error: true
 
       - name: Commit updated data files
         run: |
