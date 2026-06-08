@@ -241,6 +241,27 @@
       ]
     },
     {
+      "name": "West End Cafe",
+      "url": "https://www.westendfi.com/",
+      "schedules": [
+        {
+          "label": "Regular",
+          "start_date": "",
+          "end_date": "",
+          "hours_by_dow": [
+            "7:00 am – 4:00 pm",
+            "7:00 am – 4:00 pm",
+            "7:00 am – 4:00 pm",
+            "7:00 am – 4:00 pm",
+            "7:00 am – 4:00 pm",
+            "7:00 am – 4:00 pm",
+            "7:00 am – 4:00 pm"
+          ],
+          "holiday_closings": []
+        }
+      ]
+    },
+    {
       "name": "Doctor's Office",
       "url": "https://islandhealthproject.com/",
       "schedules": [

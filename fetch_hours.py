@@ -9,6 +9,7 @@ Sources:
   • Compost Station  → https://fiwmd.net/
   • Library          → https://filibrary.org/
   • Village Market   → https://fishersisland.net/listing/village-market/
+  • West End Cafe    → https://www.westendfi.com/  (hardcoded – site structure unknown)
 
 Output structure:
 {
@@ -46,6 +47,32 @@ from playwright.async_api import async_playwright
 # ════════════════════════════════════════════════════════════════════════════
 # Fallback data
 # ════════════════════════════════════════════════════════════════════════════
+
+# ── West End Cafe ─────────────────────────────────────────────────────────────
+WEST_END_URL = "https://www.westendfi.com/"
+
+WEST_END_BUSINESS = {
+    "name": "West End Cafe",
+    "url":  WEST_END_URL,
+    "schedules": [
+        {
+            "label": "Regular",
+            "start_date": "",
+            "end_date": "",
+            # 0=Sun … 6=Sat
+            "hours_by_dow": [
+                "7:00 am \u2013 4:00 pm",  # Sun
+                "7:00 am \u2013 4:00 pm",  # Mon
+                "7:00 am \u2013 4:00 pm",  # Tue
+                "7:00 am \u2013 4:00 pm",  # Wed
+                "7:00 am \u2013 4:00 pm",  # Thu
+                "7:00 am \u2013 4:00 pm",  # Fri
+                "7:00 am \u2013 4:00 pm",  # Sat
+            ],
+            "holiday_closings": [],
+        }
+    ],
+}
 
 # ── Doctor's Office (Island Health Project) ──────────────────────────────────
 IHP_URL = "https://islandhealthproject.com/"
@@ -850,6 +877,10 @@ def main():
         print(f"  ⚠ Village Market failed ({e}) — using fallback", flush=True)
         vm_fallback = True
         businesses.append(VM_FALLBACK)
+
+    # ── West End Cafe (hardcoded) ─────────────────────────────────────────────
+    print("Adding West End Cafe (hardcoded hours) …", flush=True)
+    businesses.append(WEST_END_BUSINESS)
 
     # ── Doctor's Office (last) ────────────────────────────────────────────────
     print("Fetching IHP (Doctor's Office) …", flush=True)
