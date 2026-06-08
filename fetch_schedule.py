@@ -1,7 +1,7 @@
 """
 fetch_schedule.py
-Fetches the Fishers Island Ferry vehicle schedule for the next 7 days
-and writes schedule.json to the current directory.
+Fetches the Fishers Island Ferry vehicle schedule for today + the next 9 days
+(10 days total) and writes schedule.json to the current directory.
 
 Requires: playwright  (pip install playwright && playwright install chromium)
 """
@@ -110,7 +110,7 @@ async def fetch_sailings(page, date_str: str, departure: str, destination: str) 
 # ---------------------------------------------------------------------------
 async def main():
     today = date.today()
-    target_dates = [today + timedelta(days=i) for i in range(1, 8)]
+    target_dates = [today + timedelta(days=i) for i in range(0, 10)]
 
     result = {
         "fetched_at": datetime.now().isoformat(timespec="seconds"),

@@ -322,10 +322,21 @@
     return isNaN(d.getTime()) ? null : d;
   }
 
+  // Return a Date representing midnight of today in Eastern time.
+  // Used to filter out days that have already passed.
+  function todayEastern() {
+    const easternDate = new Date().toLocaleDateString('en-CA', {timeZone: 'America/New_York'});
+    // easternDate is "YYYY-MM-DD"; parse as local midnight for comparison
+    return new Date(easternDate + 'T00:00:00');
+  }
+
   function renderSchedule(data) {
     document.getElementById('updated-time').textContent = formatUpdated(data.fetched_at);
 
-    const html = data.days.map(day => {
+    const cutoff = todayEastern();
+    const html = data.days
+      .filter(day => { const d = labelToDate(day.label); return d && d >= cutoff; })
+      .map(day => {
       const { dow, date } = splitLabel(day.label);
       const cols = (day.directions || []).map(renderDirection).join('');
       const dayDate = labelToDate(day.label);
