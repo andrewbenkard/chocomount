@@ -7,6 +7,7 @@ Requires: playwright  (pip install playwright && playwright install chromium)
 """
 
 import asyncio
+import csv
 import json
 import re
 import sys
@@ -24,6 +25,8 @@ DIRECTIONS = [
     ("From Fishers Island","1105", "1104"),
 ]
 OUTPUT_FILE = Path(__file__).parent / "schedule.json"
+HISTORY_FILE = Path(__file__).parent / "ferry_history.csv"
+HISTORY_FIELDS = ["fetched_at", "sailing_date", "direction", "time", "vehicle_spaces"]
 
 # Regex patterns for extracting data from the Hornblower iframe text
 TIME_RE    = re.compile(r'\b(\d{1,2}:\d{2}\s+(?:AM|PM))\b')
@@ -105,6 +108,37 @@ async def fetch_sailings(page, date_str: str, departure: str, destination: str) 
     return []
 
 
+def append_history(result: dict) -> int:
+    """Append every sailing observation in `result` to the append-only
+    ferry_history.csv log. Each row records the fetch timestamp alongside the
+    sailing it describes, so the file accumulates a full history of how
+    vehicle availability evolves for each date over time. Returns the number
+    of rows written."""
+    fetched_at = result.get("fetched_at", "")
+    rows = []
+    for day in result.get("days", []):
+        for direction in day.get("directions", []):
+            for sailing in direction.get("sailings", []):
+                rows.append({
+                    "fetched_at": fetched_at,
+                    "sailing_date": day.get("date", ""),
+                    "direction": direction.get("direction", ""),
+                    "time": sailing.get("time", ""),
+                    "vehicle_spaces": sailing.get("vehicle_spaces"),
+                })
+
+    if not rows:
+        return 0
+
+    file_exists = HISTORY_FILE.exists()
+    with HISTORY_FILE.open("a", newline="") as f:
+        writer = csv.DictWriter(f, fieldnames=HISTORY_FIELDS)
+        if not file_exists:
+            writer.writeheader()
+        writer.writerows(rows)
+    return len(rows)
+
+
 # ---------------------------------------------------------------------------
 # Main
 # ---------------------------------------------------------------------------
@@ -155,6 +189,9 @@ async def main():
         for d in day["directions"]
     )
     print(f"\n✓ Wrote {OUTPUT_FILE} — {total} total sailings", flush=True)
+
+    n_hist = append_history(result)
+    print(f"✓ Appended {n_hist} observation(s) to {HISTORY_FILE.name}", flush=True)
 
 
 if __name__ == "__main__":

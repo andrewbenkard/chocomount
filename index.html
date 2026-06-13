@@ -84,6 +84,19 @@
       font-style: italic;
     }
 
+    /* ── Tide summary line ───────────────────────────────── */
+    .tide-summary {
+      font-size: 0.82rem;
+      color: #555;
+      padding: 6px 18px 7px;
+      border-top: 1px solid #eef0f5;
+    }
+    .tide-summary .tide-label {
+      font-weight: 700;
+      color: #3a6ea5;
+      margin-right: 3px;
+    }
+
     /* ── Section dividers inside each card ───────────────── */
     .card-section-label {
       font-size: 0.68rem;
@@ -194,6 +207,7 @@
 
 <footer>
   Weather from <a href="https://open-meteo.com" target="_blank" rel="noopener">Open-Meteo</a>.
+  Tides from <a href="https://tidesandcurrents.noaa.gov/stationhome.html?id=8510719" target="_blank" rel="noopener">NOAA</a> (Silver Eel Pond).
   Ferry data from <a href="https://www.fiferry.com" target="_blank" rel="noopener">fiferry.com</a>.
   Doctor&rsquo;s hours from <a href="https://islandhealthproject.com" target="_blank" rel="noopener">islandhealthproject.com</a>.
   Waste Management hours from <a href="https://fiwmd.net" target="_blank" rel="noopener">fiwmd.net</a>.
@@ -241,6 +255,24 @@
     const summary = _weatherData.days[_dateStr(date)];
     if (!summary) return '';
     return `<div class="weather-summary">${summary}</div>`;
+  }
+
+  // ── Tides (loaded from tides.json) ──────────────────────
+  let _tidesData = null;
+
+  function renderTides(date) {
+    if (!_tidesData || !_tidesData.days) return '';
+    const events = _tidesData.days[_dateStr(date)];
+    if (!events || !events.length) return '';
+    // Compact "8:19 AM" -> "8:19a", "12:00 PM" -> "12p"
+    const compact = t => t.replace(':00', '').replace(' AM', 'a').replace(' PM', 'p');
+    const highs = events.filter(e => e.type === 'H').map(e => compact(e.time));
+    const lows  = events.filter(e => e.type === 'L').map(e => compact(e.time));
+    const parts = [];
+    if (highs.length) parts.push(`<span class="tide-label">High</span>${highs.join(', ')}`);
+    if (lows.length)  parts.push(`<span class="tide-label">Low</span>${lows.join(', ')}`);
+    if (!parts.length) return '';
+    return `<div class="tide-summary">${parts.join(' &nbsp;&middot;&nbsp; ')}</div>`;
   }
 
   function _dateStr(d) {
@@ -341,6 +373,7 @@
       const cols = (day.directions || []).map(renderDirection).join('');
       const dayDate = labelToDate(day.label);
       const weather = dayDate ? renderWeather(dayDate) : '';
+      const tides = dayDate ? renderTides(dayDate) : '';
       const openingHours = dayDate ? renderOpeningHours(dayDate) : '';
       return `
         <div class="day-card">
@@ -349,6 +382,7 @@
             <div class="day-date">${date}</div>
           </div>
           ${weather}
+          ${tides}
           <div class="card-section-label">Ferry &mdash; Vehicle Availability</div>
           <div class="directions-grid">${cols}</div>
           ${openingHours}
@@ -363,10 +397,12 @@
     fetch('schedule.json' + _ts).then(r => { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); }),
     fetch('hours.json'   + _ts).then(r => r.json()).catch(() => null),
     fetch('weather.json' + _ts).then(r => r.json()).catch(() => null),
+    fetch('tides.json'   + _ts).then(r => r.json()).catch(() => null),
   ])
-    .then(([schedule, hours, weather]) => {
+    .then(([schedule, hours, weather, tides]) => {
       _hoursData   = hours;
       _weatherData = weather;
+      _tidesData   = tides;
       renderSchedule(schedule);
     })
     .catch(() => {
