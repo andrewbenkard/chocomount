@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-06-11T21:28:25Z",
+  "fetched_at": "2026-06-13T20:23:17Z",
   "used_fallback": true,
   "businesses": [
     {
@@ -139,16 +139,16 @@
       "url": "https://filibrary.org/",
       "schedules": [
         {
-          "label": "Spring Hours",
+          "label": "Summer Hours",
           "start_date": "",
           "end_date": "",
           "hours_by_dow": [
             "Closed",
-            "1:00 pm – 5:00 pm",
-            "1:00 pm – 7:00 pm",
-            "1:00 pm – 5:00 pm",
-            "1:00 pm – 7:00 pm",
-            "1:00 pm – 5:00 pm",
+            "9:00 am – 12:00 pm",
+            "Closed",
+            "Closed",
+            "Closed",
+            "9:00 am – 12:00 pm",
             "9:00 am – 12:00 pm"
           ]
         }
