@@ -269,8 +269,8 @@
     const highs = events.filter(e => e.type === 'H').map(e => compact(e.time));
     const lows  = events.filter(e => e.type === 'L').map(e => compact(e.time));
     const parts = [];
-    if (highs.length) parts.push(`<span class="tide-label">High</span>${highs.join(', ')}`);
-    if (lows.length)  parts.push(`<span class="tide-label">Low</span>${lows.join(', ')}`);
+    if (highs.length) parts.push(`<span class="tide-label">High tide</span>${highs.join(', ')}`);
+    if (lows.length)  parts.push(`<span class="tide-label">Low tide</span>${lows.join(', ')}`);
     if (!parts.length) return '';
     return `<div class="tide-summary">${parts.join(' &nbsp;&middot;&nbsp; ')}</div>`;
   }
