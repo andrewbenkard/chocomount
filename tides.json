@@ -1,31 +1,9 @@
 {
-  "fetched_at": "2026-06-14T20:25:33Z",
+  "fetched_at": "2026-06-15T16:21:25Z",
   "station": "Silver Eel Pond, Fishers Island, NY",
   "station_id": "8510719",
   "datum": "MLLW",
   "days": {
-    "2026-06-14": [
-      {
-        "type": "L",
-        "time": "3:37 AM",
-        "height": -0.3
-      },
-      {
-        "type": "H",
-        "time": "9:13 AM",
-        "height": 2.3
-      },
-      {
-        "type": "L",
-        "time": "3:28 PM",
-        "height": 0.2
-      },
-      {
-        "type": "H",
-        "time": "9:36 PM",
-        "height": 3.5
-      }
-    ],
     "2026-06-15": [
       {
         "type": "L",
@@ -211,6 +189,28 @@
       {
         "type": "H",
         "time": "5:37 PM",
+        "height": 2.8
+      }
+    ],
+    "2026-06-24": [
+      {
+        "type": "L",
+        "time": "12:25 AM",
+        "height": 0.5
+      },
+      {
+        "type": "H",
+        "time": "5:58 AM",
+        "height": 1.9
+      },
+      {
+        "type": "L",
+        "time": "12:12 PM",
+        "height": 0.6
+      },
+      {
+        "type": "H",
+        "time": "6:26 PM",
         "height": 2.8
       }
     ]
