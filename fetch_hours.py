@@ -153,6 +153,32 @@ WEST_END_BUSINESS = {
     ],
 }
 
+# ── Fishers Island Freight Office ─────────────────────────────────────────────
+FREIGHT_OFFICE_URL = "https://www.fiferry.com/"
+
+FREIGHT_OFFICE_BUSINESS = {
+    "name": "Fishers Island Freight Office",
+    "url":  FREIGHT_OFFICE_URL,
+    "schedules": [
+        {
+            "label": "Regular",
+            "start_date": "",
+            "end_date": "",
+            # 0=Sun … 6=Sat
+            "hours_by_dow": [
+                "Closed",                       # Sun
+                "8:00 am – 4:45 pm",       # Mon
+                "8:00 am – 4:45 pm",       # Tue
+                "8:00 am – 4:45 pm",       # Wed
+                "8:00 am – 4:45 pm",       # Thu
+                "8:00 am – 4:45 pm",       # Fri
+                "7:30 am – 11:30 am",      # Sat
+            ],
+            "holiday_closings": [],
+        }
+    ],
+}
+
 # ── Doctor's Office (Island Health Project) ──────────────────────────────────
 IHP_URL = "https://islandhealthproject.com/"
 
@@ -923,6 +949,10 @@ def main():
         wmd_fallback = True
         businesses.append(WMD_FALLBACK_TRANSFER)
         businesses.append(WMD_FALLBACK_COMPOST)
+
+    # ── Fishers Island Freight Office (hardcoded, below Compost) ─────────────
+    print("Adding Fishers Island Freight Office (hardcoded hours) …", flush=True)
+    businesses.append(FREIGHT_OFFICE_BUSINESS)
 
     # ── Library (filibrary.org) ───────────────────────────────────────────────
     print("Fetching Library (filibrary.org) …", flush=True)

@@ -135,6 +135,27 @@
       ]
     },
     {
+      "name": "Fishers Island Freight Office",
+      "url": "https://www.fiferry.com/",
+      "schedules": [
+        {
+          "label": "Regular",
+          "start_date": "",
+          "end_date": "",
+          "hours_by_dow": [
+            "Closed",
+            "8:00 am – 4:45 pm",
+            "8:00 am – 4:45 pm",
+            "8:00 am – 4:45 pm",
+            "8:00 am – 4:45 pm",
+            "8:00 am – 4:45 pm",
+            "7:30 am – 11:30 am"
+          ],
+          "holiday_closings": []
+        }
+      ]
+    },
+    {
       "name": "Library",
       "url": "https://filibrary.org/",
       "schedules": [
