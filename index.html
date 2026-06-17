@@ -366,8 +366,19 @@
     document.getElementById('updated-time').textContent = formatUpdated(data.fetched_at);
 
     const cutoff = todayEastern();
-    const html = data.days
-      .filter(day => { const d = labelToDate(day.label); return d && d >= cutoff; })
+    const visibleDays = data.days
+      .filter(day => { const d = labelToDate(day.label); return d && d >= cutoff; });
+
+    // Show days only as far as the ferry actually publishes sailings: trim any
+    // trailing days that have no sailings in either direction. This lets the
+    // page extend toward 14 days only when ferry data exists that far out.
+    const hasSailings = day =>
+      (day.directions || []).some(dir => dir.sailings && dir.sailings.length > 0);
+    while (visibleDays.length && !hasSailings(visibleDays[visibleDays.length - 1])) {
+      visibleDays.pop();
+    }
+
+    const html = visibleDays
       .map(day => {
       const { dow, date } = splitLabel(day.label);
       const cols = (day.directions || []).map(renderDirection).join('');

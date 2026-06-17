@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-fetch_tides.py — fetch a 10-day high/low tide forecast for Fishers Island, NY
+fetch_tides.py — fetch a 14-day high/low tide forecast for Fishers Island, NY
 from the NOAA Tides & Currents API (free, no API key required) and write
 tides.json for consumption by index.html.
 
@@ -40,7 +40,7 @@ except Exception:  # pragma: no cover - zoneinfo always present on 3.9+
 _STATION_ID = "8510719"
 _STATION_NAME = "Silver Eel Pond, Fishers Island, NY"
 _DATUM = "MLLW"
-_FORECAST_DAYS = 10
+_FORECAST_DAYS = 14
 
 _BASE = "https://api.tidesandcurrents.noaa.gov/api/prod/datagetter"
 

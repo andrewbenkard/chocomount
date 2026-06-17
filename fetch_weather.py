@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-fetch_weather.py — fetch a 10-day weather forecast for Fishers Island, NY
+fetch_weather.py — fetch a 14-day weather forecast for Fishers Island, NY
 from the Open-Meteo API (free, no API key required) and write
 weather.json for consumption by index.html.
 
@@ -34,7 +34,7 @@ _PARAMS = urllib.parse.urlencode({
     "daily":            "weather_code,temperature_2m_max",
     "temperature_unit": "fahrenheit",
     "timezone":         "America/New_York",
-    "forecast_days":    10,
+    "forecast_days":    14,
 })
 _URL = f"{_BASE}?{_PARAMS}"
 
