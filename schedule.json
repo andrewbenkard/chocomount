@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-06-20T12:25:49",
+  "fetched_at": "2026-06-20T20:18:41",
   "days": [
     {
       "date": "2026-06-20",
@@ -7,39 +7,14 @@
       "directions": [
         {
           "direction": "From New London",
-          "sailings": [
-            {
-              "time": "1:00 PM",
-              "vehicle_spaces": 15
-            },
-            {
-              "time": "4:00 PM",
-              "vehicle_spaces": 6
-            },
-            {
-              "time": "6:15 PM",
-              "vehicle_spaces": 20
-            }
-          ]
+          "sailings": []
         },
         {
           "direction": "From Fishers Island",
           "sailings": [
             {
-              "time": "11:15 AM",
-              "vehicle_spaces": 14
-            },
-            {
-              "time": "2:15 PM",
-              "vehicle_spaces": 18
-            },
-            {
-              "time": "5:15 PM",
-              "vehicle_spaces": 20
-            },
-            {
               "time": "7:15 PM",
-              "vehicle_spaces": 21
+              "vehicle_spaces": 15
             }
           ]
         }
@@ -74,11 +49,11 @@
             },
             {
               "time": "5:15 PM",
-              "vehicle_spaces": 13
+              "vehicle_spaces": 12
             },
             {
               "time": "6:15 PM",
-              "vehicle_spaces": 26
+              "vehicle_spaces": 25
             }
           ]
         },
@@ -103,7 +78,7 @@
             },
             {
               "time": "5:15 PM",
-              "vehicle_spaces": 4
+              "vehicle_spaces": 3
             },
             {
               "time": "6:30 PM",
@@ -130,11 +105,11 @@
             },
             {
               "time": "7:00 AM",
-              "vehicle_spaces": 11
+              "vehicle_spaces": 12
             },
             {
               "time": "10:00 AM",
-              "vehicle_spaces": 5
+              "vehicle_spaces": 3
             },
             {
               "time": "12:30 PM",
@@ -142,11 +117,11 @@
             },
             {
               "time": "3:30 PM",
-              "vehicle_spaces": 10
+              "vehicle_spaces": 8
             },
             {
               "time": "6:15 PM",
-              "vehicle_spaces": 18
+              "vehicle_spaces": 17
             }
           ]
         },
@@ -219,7 +194,7 @@
             },
             {
               "time": "11:15 AM",
-              "vehicle_spaces": 12
+              "vehicle_spaces": 10
             },
             {
               "time": "1:45 PM",
@@ -250,7 +225,7 @@
             },
             {
               "time": "10:00 AM",
-              "vehicle_spaces": 10
+              "vehicle_spaces": 9
             },
             {
               "time": "2:00 PM",
@@ -258,7 +233,7 @@
             },
             {
               "time": "3:30 PM",
-              "vehicle_spaces": 8
+              "vehicle_spaces": 7
             },
             {
               "time": "6:15 PM",
@@ -271,7 +246,7 @@
           "sailings": [
             {
               "time": "8:15 AM",
-              "vehicle_spaces": 10
+              "vehicle_spaces": 5
             },
             {
               "time": "11:15 AM",
@@ -279,7 +254,7 @@
             },
             {
               "time": "3:15 PM",
-              "vehicle_spaces": 12
+              "vehicle_spaces": 11
             },
             {
               "time": "4:45 PM",
@@ -310,7 +285,7 @@
             },
             {
               "time": "12:30 PM",
-              "vehicle_spaces": 19
+              "vehicle_spaces": 18
             },
             {
               "time": "2:00 PM",
@@ -339,7 +314,7 @@
           "sailings": [
             {
               "time": "8:15 AM",
-              "vehicle_spaces": 15
+              "vehicle_spaces": 16
             },
             {
               "time": "11:15 AM",
@@ -347,7 +322,7 @@
             },
             {
               "time": "1:45 PM",
-              "vehicle_spaces": 16
+              "vehicle_spaces": 15
             },
             {
               "time": "3:15 PM",
@@ -390,11 +365,11 @@
             },
             {
               "time": "12:30 PM",
-              "vehicle_spaces": 8
+              "vehicle_spaces": 4
             },
             {
               "time": "2:00 PM",
-              "vehicle_spaces": 13
+              "vehicle_spaces": 12
             },
             {
               "time": "3:30 PM",
@@ -423,7 +398,7 @@
           "sailings": [
             {
               "time": "8:15 AM",
-              "vehicle_spaces": 17
+              "vehicle_spaces": 16
             },
             {
               "time": "11:15 AM",
@@ -579,7 +554,7 @@
             },
             {
               "time": "6:30 PM",
-              "vehicle_spaces": 13
+              "vehicle_spaces": 12
             },
             {
               "time": "7:15 PM",
@@ -606,7 +581,7 @@
             },
             {
               "time": "10:00 AM",
-              "vehicle_spaces": 14
+              "vehicle_spaces": 13
             },
             {
               "time": "12:30 PM",
@@ -614,7 +589,7 @@
             },
             {
               "time": "3:30 PM",
-              "vehicle_spaces": 14
+              "vehicle_spaces": 12
             },
             {
               "time": "6:15 PM",
@@ -626,20 +601,28 @@
           "direction": "From Fishers Island",
           "sailings": [
             {
-              "time": "11:15 AM",
-              "vehicle_spaces": 14
+              "time": "5:30 AM",
+              "vehicle_spaces": 24
             },
             {
-              "time": "2:15 PM",
+              "time": "8:15 AM",
+              "vehicle_spaces": 8
+            },
+            {
+              "time": "11:15 AM",
+              "vehicle_spaces": 4
+            },
+            {
+              "time": "1:45 PM",
+              "vehicle_spaces": 17
+            },
+            {
+              "time": "4:45 PM",
               "vehicle_spaces": 18
             },
             {
-              "time": "5:15 PM",
-              "vehicle_spaces": 20
-            },
-            {
               "time": "7:15 PM",
-              "vehicle_spaces": 21
+              "vehicle_spaces": 25
             }
           ]
         }
@@ -662,7 +645,7 @@
             },
             {
               "time": "12:30 PM",
-              "vehicle_spaces": 18
+              "vehicle_spaces": 17
             },
             {
               "time": "3:30 PM",
@@ -714,11 +697,11 @@
             },
             {
               "time": "10:00 AM",
-              "vehicle_spaces": 15
+              "vehicle_spaces": 13
             },
             {
               "time": "2:00 PM",
-              "vehicle_spaces": 7
+              "vehicle_spaces": 6
             },
             {
               "time": "3:30 PM",
@@ -778,11 +761,11 @@
             },
             {
               "time": "2:00 PM",
-              "vehicle_spaces": 12
+              "vehicle_spaces": 11
             },
             {
               "time": "3:30 PM",
-              "vehicle_spaces": 10
+              "vehicle_spaces": 9
             },
             {
               "time": "5:15 PM",
@@ -850,11 +833,11 @@
             },
             {
               "time": "10:00 AM",
-              "vehicle_spaces": 4
+              "vehicle_spaces": 2
             },
             {
               "time": "12:30 PM",
-              "vehicle_spaces": 18
+              "vehicle_spaces": 17
             },
             {
               "time": "2:00 PM",
