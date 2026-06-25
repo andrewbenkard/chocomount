@@ -1,6 +1,6 @@
 {
-  "fetched_at": "2026-06-25T13:22:53Z",
-  "used_fallback": false,
+  "fetched_at": "2026-06-25T21:05:34Z",
+  "used_fallback": true,
   "businesses": [
     {
       "name": "Transfer Station",
@@ -181,7 +181,7 @@
       "schedules": [
         {
           "label": "Summer",
-          "start_date": "2026-06-17",
+          "start_date": "2026-06-13",
           "end_date": "2026-08-30",
           "hours_by_dow": [
             "Closed",
