@@ -1,6 +1,6 @@
 {
-  "fetched_at": "2026-06-27T20:15:58Z",
-  "used_fallback": true,
+  "fetched_at": "2026-06-28T12:22:10Z",
+  "used_fallback": false,
   "businesses": [
     {
       "name": "Transfer Station",
@@ -160,16 +160,16 @@
       "url": "https://filibrary.org/",
       "schedules": [
         {
-          "label": "Spring Hours",
+          "label": "Summer Hours",
           "start_date": "",
           "end_date": "",
           "hours_by_dow": [
             "Closed",
-            "1:00 pm – 5:00 pm",
-            "1:00 pm – 7:00 pm",
-            "1:00 pm – 5:00 pm",
-            "1:00 pm – 7:00 pm",
-            "1:00 pm – 5:00 pm",
+            "9:00 am – 12:00 pm",
+            "Closed",
+            "Closed",
+            "Closed",
+            "9:00 am – 12:00 pm",
             "9:00 am – 12:00 pm"
           ]
         }
@@ -181,7 +181,7 @@
       "schedules": [
         {
           "label": "Summer",
-          "start_date": "2026-06-13",
+          "start_date": "2026-06-17",
           "end_date": "2026-08-30",
           "hours_by_dow": [
             "Closed",
@@ -309,8 +309,8 @@
       "schedules": [
         {
           "label": "Off Peak",
-          "start_date": "2025-09-06",
-          "end_date": "2026-06-21",
+          "start_date": "",
+          "end_date": "",
           "hours_by_dow": [
             "Closed",
             "5:00 pm – 7:00 pm",
@@ -323,8 +323,8 @@
         },
         {
           "label": "Peak",
-          "start_date": "2026-06-22",
-          "end_date": "2026-09-07",
+          "start_date": "",
+          "end_date": "",
           "hours_by_dow": [
             "Closed",
             "9:00 am – 12:00 pm & 1:00 pm – 4:00 pm",
