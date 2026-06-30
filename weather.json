@@ -1,19 +1,19 @@
 {
-  "fetched_at": "2026-06-30T13:14:32Z",
+  "fetched_at": "2026-06-30T21:04:01Z",
   "days": {
-    "2026-06-30": "Foggy, 70°F",
-    "2026-07-01": "Overcast, 69°F",
-    "2026-07-02": "Thunderstorm, 89°F",
-    "2026-07-03": "Clear sky, 93°F",
-    "2026-07-04": "Showers, 88°F",
-    "2026-07-05": "Light drizzle, 77°F",
-    "2026-07-06": "Overcast, 79°F",
-    "2026-07-07": "Light drizzle, 83°F",
-    "2026-07-08": "Overcast, 82°F",
-    "2026-07-09": "Overcast, 80°F",
-    "2026-07-10": "Overcast, 79°F",
-    "2026-07-11": "Light drizzle, 74°F",
-    "2026-07-12": "Foggy, 78°F",
-    "2026-07-13": "Partly cloudy, 79°F"
+    "2026-06-30": "Light drizzle, 70°F",
+    "2026-07-01": "Overcast, 70°F",
+    "2026-07-02": "Clear sky, 87°F",
+    "2026-07-03": "Light drizzle, 94°F",
+    "2026-07-04": "Light showers, 87°F",
+    "2026-07-05": "Light drizzle, 82°F",
+    "2026-07-06": "Overcast, 78°F",
+    "2026-07-07": "Overcast, 77°F",
+    "2026-07-08": "Partly cloudy, 78°F",
+    "2026-07-09": "Light drizzle, 81°F",
+    "2026-07-10": "Overcast, 84°F",
+    "2026-07-11": "Partly cloudy, 78°F",
+    "2026-07-12": "Overcast, 80°F",
+    "2026-07-13": "Overcast, 83°F"
   }
 }
