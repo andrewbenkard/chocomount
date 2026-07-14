@@ -284,25 +284,43 @@ WMD_FALLBACK_COMPOST = {
 # which changes during the year.  The fallback reflects Spring Hours.
 LIBRARY_URL = "https://filibrary.org/"
 
-LIBRARY_FALLBACK = {
+LIBRARY_BUSINESS = {
     "name": "Library",
     "url":  LIBRARY_URL,
     "schedules": [
         {
-            "label":      "Spring Hours",
+            # Summer Hours per filibrary.org (mid-June to mid-September):
+            # Mon-Fri 9am-12pm & 1:30-5pm, Sat 9am-12pm, Sun closed.
+            "label":      "Summer",
+            "start_date": "2026-06-15",
+            "end_date":   "2026-09-15",
+            # 0=Sun .. 6=Sat
+            "hours_by_dow": [
+                "Closed",
+                "9:00 am \u2013 12:00 pm & 1:30 pm \u2013 5:00 pm",
+                "9:00 am \u2013 12:00 pm & 1:30 pm \u2013 5:00 pm",
+                "9:00 am \u2013 12:00 pm & 1:30 pm \u2013 5:00 pm",
+                "9:00 am \u2013 12:00 pm & 1:30 pm \u2013 5:00 pm",
+                "9:00 am \u2013 12:00 pm & 1:30 pm \u2013 5:00 pm",
+                "9:00 am \u2013 12:00 pm",
+            ],
+        },
+        {
+            # Off-season default (carried over from prior data; update
+            # when the library posts non-summer hours).
+            "label":      "Off-Season",
             "start_date": "",
             "end_date":   "",
-            # 0=Sun … 6=Sat
             "hours_by_dow": [
-                "Closed",         # Sun
-                "1\u20135pm",     # Mon
-                "1\u20137pm",     # Tue
-                "1\u20135pm",     # Wed
-                "1\u20137pm",     # Thu
-                "1\u20135pm",     # Fri
-                "9am\u201312pm",  # Sat
+                "Closed",
+                "1:00 pm \u2013 5:00 pm",
+                "1:00 pm \u2013 7:00 pm",
+                "1:00 pm \u2013 5:00 pm",
+                "1:00 pm \u2013 7:00 pm",
+                "1:00 pm \u2013 5:00 pm",
+                "9:00 am \u2013 12:00 pm",
             ],
-        }
+        },
     ],
 }
 
@@ -956,19 +974,7 @@ def main():
 
     # ── Library (filibrary.org) ───────────────────────────────────────────────
     print("Fetching Library (filibrary.org) …", flush=True)
-    lib_fallback = False
-    try:
-        html = asyncio.run(_fetch(LIBRARY_URL))
-        biz = parse_library_html(html)
-        if biz:
-            print(f"  ✓ Library hours parsed: {biz['schedules'][0]['label']}", flush=True)
-            businesses.append(biz)
-        else:
-            raise ValueError("no library hours parsed")
-    except Exception as e:
-        print(f"  ⚠ Library failed ({e}) — using fallback", flush=True)
-        lib_fallback = True
-        businesses.append(LIBRARY_FALLBACK)
+    businesses.append(LIBRARY_BUSINESS)
 
     # ── Village Market (fishersisland.net) ───────────────────────────────────
     print("Fetching Village Market (fishersisland.net) …", flush=True)
@@ -1028,7 +1034,7 @@ def main():
 
     data = {
         "fetched_at":    now_iso,
-        "used_fallback": ihp_fallback or wmd_fallback or lib_fallback or vm_fallback,
+        "used_fallback": ihp_fallback or wmd_fallback or vm_fallback,
         "businesses":    businesses,
     }
 

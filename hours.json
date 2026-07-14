@@ -160,16 +160,30 @@
       "url": "https://filibrary.org/",
       "schedules": [
         {
-          "label": "Summer Hours",
+          "label": "Summer",
+          "start_date": "2026-06-15",
+          "end_date": "2026-09-15",
+          "hours_by_dow": [
+            "Closed",
+            "9:00 am – 12:00 pm & 1:30 pm – 5:00 pm",
+            "9:00 am – 12:00 pm & 1:30 pm – 5:00 pm",
+            "9:00 am – 12:00 pm & 1:30 pm – 5:00 pm",
+            "9:00 am – 12:00 pm & 1:30 pm – 5:00 pm",
+            "9:00 am – 12:00 pm & 1:30 pm – 5:00 pm",
+            "9:00 am – 12:00 pm"
+          ]
+        },
+        {
+          "label": "Off-Season",
           "start_date": "",
           "end_date": "",
           "hours_by_dow": [
             "Closed",
-            "9:00 am – 12:00 pm",
-            "Closed",
-            "Closed",
-            "Closed",
-            "9:00 am – 12:00 pm",
+            "1:00 pm – 5:00 pm",
+            "1:00 pm – 7:00 pm",
+            "1:00 pm – 5:00 pm",
+            "1:00 pm – 7:00 pm",
+            "1:00 pm – 5:00 pm",
             "9:00 am – 12:00 pm"
           ]
         }
