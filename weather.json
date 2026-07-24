@@ -1,19 +1,19 @@
 {
-  "fetched_at": "2026-07-24T12:23:17Z",
+  "fetched_at": "2026-07-24T20:28:56Z",
   "days": {
     "2026-07-24": "Overcast, 70°F",
     "2026-07-25": "Overcast, 70°F",
-    "2026-07-26": "Overcast, 79°F",
-    "2026-07-27": "Overcast, 74°F",
-    "2026-07-28": "Overcast, 75°F",
-    "2026-07-29": "Light showers, 70°F",
-    "2026-07-30": "Light drizzle, 69°F",
-    "2026-07-31": "Overcast, 76°F",
-    "2026-08-01": "Mainly clear, 78°F",
-    "2026-08-02": "Drizzle, 77°F",
-    "2026-08-03": "Light showers, 80°F",
-    "2026-08-04": "Drizzle, 83°F",
-    "2026-08-05": "Overcast, 82°F",
-    "2026-08-06": "Mainly clear, 81°F"
+    "2026-07-26": "Partly cloudy, 74°F",
+    "2026-07-27": "Overcast, 73°F",
+    "2026-07-28": "Light showers, 75°F",
+    "2026-07-29": "Light showers, 80°F",
+    "2026-07-30": "Light drizzle, 79°F",
+    "2026-07-31": "Overcast, 79°F",
+    "2026-08-01": "Mainly clear, 81°F",
+    "2026-08-02": "Overcast, 80°F",
+    "2026-08-03": "Partly cloudy, 82°F",
+    "2026-08-04": "Light drizzle, 80°F",
+    "2026-08-05": "Overcast, 80°F",
+    "2026-08-06": "Drizzle, 88°F"
   }
 }
