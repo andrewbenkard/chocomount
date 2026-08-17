@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-08-16T19:28:35Z",
+  "fetched_at": "2026-08-17T11:29:33Z",
   "used_fallback": false,
   "businesses": [
     {
@@ -195,8 +195,8 @@
       "schedules": [
         {
           "label": "Summer",
-          "start_date": "2026-06-17",
-          "end_date": "2026-08-30",
+          "start_date": "2027-06-17",
+          "end_date": "2027-08-30",
           "hours_by_dow": [
             "Closed",
             "7:30 am – 5:00 pm",
