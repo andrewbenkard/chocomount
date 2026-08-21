@@ -305,13 +305,13 @@
           "start_date": "",
           "end_date": "",
           "hours_by_dow": [
-            "7:00 am – 4:00 pm",
-            "7:00 am – 4:00 pm",
-            "7:00 am – 4:00 pm",
-            "7:00 am – 4:00 pm",
-            "7:00 am – 4:00 pm",
-            "7:00 am – 4:00 pm",
-            "7:00 am – 4:00 pm"
+            "7:00 am – 3:00 pm",
+            "Closed",
+            "7:00 am – 3:00 pm",
+            "7:00 am – 3:00 pm",
+            "7:00 am – 3:00 pm",
+            "7:00 am – 3:00 pm",
+            "7:00 am – 3:00 pm"
           ],
           "holiday_closings": []
         }

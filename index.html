@@ -97,6 +97,24 @@
       margin-right: 3px;
     }
 
+    /* ── Disclaimer banner + ferry link ──────────────────── */
+    .disclaimer {
+      font-size: 0.8rem;
+      line-height: 1.4;
+      color: #6b5b00;
+      background: #fff8e1;
+      border: 1px solid #f0e2a8;
+      border-radius: 8px;
+      padding: 10px 14px;
+      margin-bottom: 16px;
+    }
+    .ferry-link {
+      font-size: 0.72rem;
+      padding: 6px 14px 10px;
+      border-top: 1px solid #f2f2f2;
+    }
+    .ferry-link a { color: #222f6e; }
+
     /* ── Section dividers inside each card ───────────────── */
     .card-section-label {
       font-size: 0.68rem;
@@ -196,12 +214,13 @@
 
 <header>
   <h1>Fishers Island Day By Day</h1>
-  <p>Ferry car availability and various opening hours.</p>
+  <p>Estimated ferry car availability and various opening hours.</p>
 </header>
 
 <main>
   <p class="updated" id="updated-time">Loading schedule&hellip;</p>
   <div id="error-msg"></div>
+  <p class="disclaimer">Ferry car availability is determined only twice a day and may be inaccurate. Click the link below the sailing times to be sure and book your spot.</p>
   <div id="schedule"></div>
 </main>
 
@@ -301,23 +320,34 @@
   }
 
   // ── Render helpers ─────────────────────────────────────────
-  function renderDirection(dir) {
+  // Build the fiferry.com booking URL for a direction on a given ISO date.
+  function ferryUrl(direction, isoDate) {
+    const [y, m, d] = (isoDate || '').split('-');
+    const dep  = direction === 'From New London' ? '1104' : '1105';
+    const dest = direction === 'From New London' ? '1105' : '1104';
+    return `https://www.fiferry.com/auto-ferries/?date=${m}/${d}/${y}&departure=${dep}&destination=${dest}`;
+  }
+
+  function renderDirection(dir, isoDate) {
     const label = dir.direction === 'From New London'
       ? 'New London &rarr; Fishers Island'
       : 'Fishers Island &rarr; New London';
+
+    const link = `<div class="ferry-link"><a href="${ferryUrl(dir.direction, isoDate)}" target="_blank" rel="noopener">Find exact availability on the Ferry website.</a></div>`;
 
     if (!dir.sailings || dir.sailings.length === 0) {
       return `
         <div class="direction-col">
           <div class="direction-label">${label}</div>
           <div class="no-data">No sailings listed.</div>
+          ${link}
         </div>`;
     }
 
     const rows = dir.sailings.map(s => {
       const cls = spaceClass(s.vehicle_spaces);
       const spacesHtml = s.vehicle_spaces !== null && s.vehicle_spaces !== undefined
-        ? `<span class="spaces ${cls}">${s.vehicle_spaces}</span><span class="spaces-label"> cars</span>`
+        ? `<span class="spaces ${cls}">~ ${s.vehicle_spaces}</span><span class="spaces-label"> cars</span>`
         : `<span class="spaces-label">—</span>`;
       return `<tr><td class="time">${s.time}</td><td>${spacesHtml}</td></tr>`;
     }).join('');
@@ -326,6 +356,7 @@
       <div class="direction-col">
         <div class="direction-label">${label}</div>
         <table><tbody>${rows}</tbody></table>
+        ${link}
       </div>`;
   }
 
@@ -381,7 +412,7 @@
     const html = visibleDays
       .map(day => {
       const { dow, date } = splitLabel(day.label);
-      const cols = (day.directions || []).map(renderDirection).join('');
+      const cols = (day.directions || []).map(dir => renderDirection(dir, day.date)).join('');
       const dayDate = labelToDate(day.label);
       const weather = dayDate ? renderWeather(dayDate) : '';
       const tides = dayDate ? renderTides(dayDate) : '';

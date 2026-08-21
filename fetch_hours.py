@@ -140,13 +140,13 @@ WEST_END_BUSINESS = {
             "end_date": "",
             # 0=Sun … 6=Sat
             "hours_by_dow": [
-                "7:00 am \u2013 4:00 pm",  # Sun
-                "7:00 am \u2013 4:00 pm",  # Mon
-                "7:00 am \u2013 4:00 pm",  # Tue
-                "7:00 am \u2013 4:00 pm",  # Wed
-                "7:00 am \u2013 4:00 pm",  # Thu
-                "7:00 am \u2013 4:00 pm",  # Fri
-                "7:00 am \u2013 4:00 pm",  # Sat
+                "7:00 am \u2013 3:00 pm",  # Sun
+                "Closed",  # Mon
+                "7:00 am \u2013 3:00 pm",  # Tue
+                "7:00 am \u2013 3:00 pm",  # Wed
+                "7:00 am \u2013 3:00 pm",  # Thu
+                "7:00 am \u2013 3:00 pm",  # Fri
+                "7:00 am \u2013 3:00 pm",  # Sat
             ],
             "holiday_closings": [],
         }
