@@ -135,10 +135,20 @@ WEST_END_BUSINESS = {
     "url":  WEST_END_URL,
     "schedules": [
         {
+            # Closed for the season through the day before Memorial Day 2027
+            # (Memorial Day 2027 = Mon, May 31); regular hours resume after.
+            "label":      "Closed for the season",
+            "start_date": "",
+            "end_date":   "2027-05-30",
+            "hours_by_dow": [
+                "Closed", "Closed", "Closed", "Closed", "Closed", "Closed", "Closed",
+            ],
+        },
+        {
             "label": "Regular",
             "start_date": "",
             "end_date": "",
-            # 0=Sun … 6=Sat
+            # 0=Sun .. 6=Sat
             "hours_by_dow": [
                 "7:00 am \u2013 3:00 pm",  # Sun
                 "Closed",  # Mon
@@ -149,7 +159,7 @@ WEST_END_BUSINESS = {
                 "7:00 am \u2013 3:00 pm",  # Sat
             ],
             "holiday_closings": [],
-        }
+        },
     ],
 }
 
