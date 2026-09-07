@@ -301,6 +301,20 @@
       "url": "https://www.westendfi.com/",
       "schedules": [
         {
+          "label": "Closed for the season",
+          "start_date": "",
+          "end_date": "2027-05-30",
+          "hours_by_dow": [
+            "Closed",
+            "Closed",
+            "Closed",
+            "Closed",
+            "Closed",
+            "Closed",
+            "Closed"
+          ]
+        },
+        {
           "label": "Regular",
           "start_date": "",
           "end_date": "",
