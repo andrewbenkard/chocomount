@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-09-13T21:22:30Z",
+  "fetched_at": "2026-09-14T16:52:48Z",
   "used_fallback": false,
   "businesses": [
     {
@@ -336,20 +336,6 @@
       "url": "https://islandhealthproject.com/",
       "schedules": [
         {
-          "label": "Peak",
-          "start_date": "",
-          "end_date": "",
-          "hours_by_dow": [
-            "Closed",
-            "9:00 am – 12:00 pm & 1:00 pm – 4:00 pm",
-            "9:00 am – 12:30 pm",
-            "9:00 am – 12:00 pm & 1:00 pm – 4:00 pm",
-            "9:00 am – 12:30 pm",
-            "9:00 am – 12:30 pm",
-            "9:00 am – 12:30 pm"
-          ]
-        },
-        {
           "label": "Off Peak",
           "start_date": "",
           "end_date": "",
@@ -361,6 +347,20 @@
             "9:00 am – 12:00 pm",
             "9:00 am – 12:00 pm",
             "Closed"
+          ]
+        },
+        {
+          "label": "Peak",
+          "start_date": "",
+          "end_date": "",
+          "hours_by_dow": [
+            "Closed",
+            "9:00 am – 12:00 pm & 1:00 pm – 4:00 pm",
+            "9:00 am – 12:30 pm",
+            "9:00 am – 12:00 pm & 1:00 pm – 4:00 pm",
+            "9:00 am – 12:30 pm",
+            "9:00 am – 12:30 pm",
+            "9:00 am – 12:30 pm"
           ]
         }
       ]
