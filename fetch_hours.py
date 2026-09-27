@@ -299,36 +299,18 @@ LIBRARY_BUSINESS = {
     "url":  LIBRARY_URL,
     "schedules": [
         {
-            # Summer Hours per filibrary.org (mid-June to mid-September):
-            # Mon-Fri 9am-12pm & 1:30-5pm, Sat 9am-12pm, Sun closed.
-            "label":      "Summer",
-            "start_date": "2026-06-15",
-            "end_date":   "2026-09-15",
-            # 0=Sun .. 6=Sat
-            "hours_by_dow": [
-                "Closed",
-                "9:00 am \u2013 12:00 pm & 1:30 pm \u2013 5:00 pm",
-                "9:00 am \u2013 12:00 pm & 1:30 pm \u2013 5:00 pm",
-                "9:00 am \u2013 12:00 pm & 1:30 pm \u2013 5:00 pm",
-                "9:00 am \u2013 12:00 pm & 1:30 pm \u2013 5:00 pm",
-                "9:00 am \u2013 12:00 pm & 1:30 pm \u2013 5:00 pm",
-                "9:00 am \u2013 12:00 pm",
-            ],
-        },
-        {
-            # Off-season default (carried over from prior data; update
-            # when the library posts non-summer hours).
-            "label":      "Off-Season",
+            # Current hours per the library (0=Sun .. 6=Sat).
+            "label":      "Regular",
             "start_date": "",
             "end_date":   "",
             "hours_by_dow": [
-                "Closed",
-                "1:00 pm \u2013 5:00 pm",
-                "1:00 pm \u2013 7:00 pm",
-                "1:00 pm \u2013 5:00 pm",
-                "1:00 pm \u2013 7:00 pm",
-                "1:00 pm \u2013 5:00 pm",
-                "9:00 am \u2013 12:00 pm",
+                "1:00 pm \u2013 5:00 pm",  # Sun
+                "1:00 pm \u2013 5:00 pm",  # Mon
+                "10:00 am \u2013 12:00 pm & 1:00 pm \u2013 5:00 pm",  # Tue
+                "1:00 pm \u2013 7:00 pm",  # Wed
+                "10:00 am \u2013 12:00 pm & 1:00 pm \u2013 5:00 pm",  # Thu
+                "1:00 pm \u2013 5:00 pm",  # Fri
+                "9:00 am \u2013 12:00 pm",  # Sat
             ],
         },
     ],
