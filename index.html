@@ -174,6 +174,20 @@
 
     .spaces-label { font-size: 0.7rem; color: #999; font-weight: 400; }
 
+    .sellout-badge {
+      display: inline-block;
+      margin-left: 6px;
+      padding: 1px 6px;
+      font-size: 0.65rem;
+      font-weight: 700;
+      color: #b91c1c;
+      background: #fee2e2;
+      border-radius: 9px;
+      white-space: nowrap;
+      vertical-align: 1px;
+      cursor: help;
+    }
+
     .no-data { color: #aaa; font-size: 0.85rem; padding: 12px 14px; }
 
     /* ── Opening hours section ────────────────────────────── */
@@ -266,6 +280,26 @@
   // ── Opening hours (loaded from hours.json) ─────────────
   let _hoursData = null;
 
+  // ── Sell-out history (loaded from sailing_stats.json) ───
+  // Map of "direction|time" → stats for sailings that often sell out.
+  let _selloutStats = new Map();
+
+  function loadSelloutStats(stats) {
+    _selloutStats = new Map();
+    if (!stats || !stats.sailings) return;
+    const weeks = Math.round((stats.window_days || 42) / 7);
+    for (const s of stats.sailings) {
+      if (!s.often_sells_out) continue;
+      _selloutStats.set(`${s.direction}|${s.time}`,
+        `Sold out on ${s.sold_out} of the last ${s.sailings} sailings (past ${weeks} weeks)`);
+    }
+  }
+
+  function renderSelloutBadge(direction, time) {
+    const tip = _selloutStats.get(`${direction}|${time}`);
+    return tip ? `<span class="sellout-badge" title="${tip}">Often sells out</span>` : '';
+  }
+
   // ── Weather (loaded from weather.json) ──────────────────
   let _weatherData = null;
 
@@ -349,7 +383,7 @@
       const spacesHtml = s.vehicle_spaces !== null && s.vehicle_spaces !== undefined
         ? `<span class="spaces ${cls}">~ ${s.vehicle_spaces}</span><span class="spaces-label"> cars</span>`
         : `<span class="spaces-label">—</span>`;
-      return `<tr><td class="time">${s.time}</td><td>${spacesHtml}</td></tr>`;
+      return `<tr><td class="time">${s.time}${renderSelloutBadge(dir.direction, s.time)}</td><td>${spacesHtml}</td></tr>`;
     }).join('');
 
     return `
@@ -440,11 +474,13 @@
     fetch('hours.json'   + _ts).then(r => r.json()).catch(() => null),
     fetch('weather.json' + _ts).then(r => r.json()).catch(() => null),
     fetch('tides.json'   + _ts).then(r => r.json()).catch(() => null),
+    fetch('sailing_stats.json' + _ts).then(r => r.json()).catch(() => null),
   ])
-    .then(([schedule, hours, weather, tides]) => {
+    .then(([schedule, hours, weather, tides, stats]) => {
       _hoursData   = hours;
       _weatherData = weather;
       _tidesData   = tides;
+      loadSelloutStats(stats);
       renderSchedule(schedule);
     })
     .catch(() => {
