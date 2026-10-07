@@ -135,6 +135,18 @@ WEST_END_BUSINESS = {
     "url":  WEST_END_URL,
     "schedules": [
         {
+            # Special opening Fri Oct 9 – Mon Oct 12, 2026 (listed first so it
+            # takes precedence over the seasonal closure below).
+            "label":      "Columbus Day weekend",
+            "start_date": "2026-10-09",
+            "end_date":   "2026-10-12",
+            "hours_by_dow": [
+                "7:00 am – 1:00 pm", "7:00 am – 1:00 pm", "7:00 am – 1:00 pm",
+                "7:00 am – 1:00 pm", "7:00 am – 1:00 pm", "7:00 am – 1:00 pm",
+                "7:00 am – 1:00 pm",
+            ],
+        },
+        {
             # Closed for the season through the day before Memorial Day 2027
             # (Memorial Day 2027 = Mon, May 31); regular hours resume after.
             "label":      "Closed for the season",
