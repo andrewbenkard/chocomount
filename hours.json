@@ -7,6 +7,78 @@
       "url": "https://fiwmd.net/",
       "schedules": [
         {
+          "label": "Through April 2027",
+          "start_date": "",
+          "end_date": "2027-04-30",
+          "hours_by_dow": [
+            "Closed",
+            "Closed",
+            "7:30 am – 12:00 pm & 12:30 pm – 4:00 pm",
+            "7:30 am – 12:00 pm",
+            "7:30 am – 12:00 pm",
+            "7:30 am – 12:00 pm & 12:30 pm – 4:00 pm",
+            "7:30 am – 12:00 pm"
+          ],
+          "holiday_closings": [
+            {
+              "date": "2026-01-01",
+              "name": "New Year’s Day"
+            },
+            {
+              "date": "2026-01-19",
+              "name": "Martin Luther King Jr. Day"
+            },
+            {
+              "date": "2026-02-16",
+              "name": "Presidents’ Day"
+            },
+            {
+              "date": "2026-05-25",
+              "name": "Memorial Day"
+            },
+            {
+              "date": "2026-06-19",
+              "name": "Juneteenth"
+            },
+            {
+              "date": "2026-07-04",
+              "name": "Independence Day"
+            },
+            {
+              "date": "2026-09-07",
+              "name": "Labor Day"
+            },
+            {
+              "date": "2026-10-12",
+              "name": "Indigenous Peoples’ Day"
+            },
+            {
+              "date": "2026-11-11",
+              "name": "Veterans Day"
+            },
+            {
+              "date": "2026-11-26",
+              "name": "Thanksgiving Day"
+            },
+            {
+              "date": "2026-12-25",
+              "name": "Christmas Day"
+            },
+            {
+              "date": "2027-01-01",
+              "name": "New Year’s Day"
+            },
+            {
+              "date": "2027-01-18",
+              "name": "Martin Luther King Jr. Day"
+            },
+            {
+              "date": "2027-02-15",
+              "name": "Presidents’ Day"
+            }
+          ]
+        },
+        {
           "label": "Regular",
           "start_date": "",
           "end_date": "",
@@ -63,6 +135,18 @@
             {
               "date": "2026-12-25",
               "name": "Christmas Day"
+            },
+            {
+              "date": "2027-01-01",
+              "name": "New Year’s Day"
+            },
+            {
+              "date": "2027-01-18",
+              "name": "Martin Luther King Jr. Day"
+            },
+            {
+              "date": "2027-02-15",
+              "name": "Presidents’ Day"
             }
           ]
         }
@@ -72,6 +156,78 @@
       "name": "Compost Station",
       "url": "https://fiwmd.net/",
       "schedules": [
+        {
+          "label": "Through April 2027",
+          "start_date": "",
+          "end_date": "2027-04-30",
+          "hours_by_dow": [
+            "Closed",
+            "Closed",
+            "7:30 am – 12:00 pm & 12:30 pm – 4:00 pm",
+            "12:30 pm – 4:00 pm",
+            "12:30 pm – 4:00 pm",
+            "7:30 am – 12:00 pm & 12:30 pm – 4:00 pm",
+            "12:30 pm – 4:00 pm"
+          ],
+          "holiday_closings": [
+            {
+              "date": "2026-01-01",
+              "name": "New Year’s Day"
+            },
+            {
+              "date": "2026-01-19",
+              "name": "Martin Luther King Jr. Day"
+            },
+            {
+              "date": "2026-02-16",
+              "name": "Presidents’ Day"
+            },
+            {
+              "date": "2026-05-25",
+              "name": "Memorial Day"
+            },
+            {
+              "date": "2026-06-19",
+              "name": "Juneteenth"
+            },
+            {
+              "date": "2026-07-04",
+              "name": "Independence Day"
+            },
+            {
+              "date": "2026-09-07",
+              "name": "Labor Day"
+            },
+            {
+              "date": "2026-10-12",
+              "name": "Indigenous Peoples’ Day"
+            },
+            {
+              "date": "2026-11-11",
+              "name": "Veterans Day"
+            },
+            {
+              "date": "2026-11-26",
+              "name": "Thanksgiving Day"
+            },
+            {
+              "date": "2026-12-25",
+              "name": "Christmas Day"
+            },
+            {
+              "date": "2027-01-01",
+              "name": "New Year’s Day"
+            },
+            {
+              "date": "2027-01-18",
+              "name": "Martin Luther King Jr. Day"
+            },
+            {
+              "date": "2027-02-15",
+              "name": "Presidents’ Day"
+            }
+          ]
+        },
         {
           "label": "Regular",
           "start_date": "",
@@ -129,6 +285,18 @@
             {
               "date": "2026-12-25",
               "name": "Christmas Day"
+            },
+            {
+              "date": "2027-01-01",
+              "name": "New Year’s Day"
+            },
+            {
+              "date": "2027-01-18",
+              "name": "Martin Luther King Jr. Day"
+            },
+            {
+              "date": "2027-02-15",
+              "name": "Presidents’ Day"
             }
           ]
         }

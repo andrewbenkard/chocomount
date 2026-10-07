@@ -5,8 +5,8 @@ and write hours.json for consumption by index.html.
 
 Sources:
   • Doctor's Office  → https://islandhealthproject.com/
-  • Transfer Station → https://fiwmd.net/
-  • Compost Station  → https://fiwmd.net/
+  • Transfer Station → https://fiwmd.net/  (hardcoded – hours provided by user)
+  • Compost Station  → https://fiwmd.net/  (hardcoded – hours provided by user)
   • Library          → https://filibrary.org/
   • Village Market   → https://fishersisland.net/listing/village-market/
   • West End Cafe    → https://www.westendfi.com/  (hardcoded – site structure unknown)
@@ -241,13 +241,33 @@ WMD_HOLIDAY_FALLBACK = [
     {"date": "2026-11-11",  "name": "Veterans Day"},
     {"date": "2026-11-26",  "name": "Thanksgiving Day"},
     {"date": "2026-12-25",  "name": "Christmas Day"},
+    {"date": "2027-01-01",  "name": "New Year’s Day"},
+    {"date": "2027-01-18",  "name": "Martin Luther King Jr. Day"},
+    {"date": "2027-02-15",  "name": "Presidents’ Day"},
 ]
 
+# Hardcoded (no longer scraped from fiwmd.net) – hours provided by user.
+# Off-season hours run through April 2027; the "Regular" schedule resumes after.
 # hours_by_dow indexed 0=Sun … 6=Sat
-WMD_FALLBACK_TRANSFER = {
+WMD_TRANSFER_BUSINESS = {
     "name": "Transfer Station",
     "url":  WMD_URL,
     "schedules": [
+        {
+            "label":      "Through April 2027",
+            "start_date": "",
+            "end_date":   "2027-04-30",
+            "hours_by_dow": [
+                "Closed",                                              # Sun
+                "Closed",                                              # Mon
+                "7:30 am – 12:00 pm & 12:30 pm – 4:00 pm",  # Tue
+                "7:30 am – 12:00 pm",                             # Wed
+                "7:30 am – 12:00 pm",                             # Thu
+                "7:30 am – 12:00 pm & 12:30 pm – 4:00 pm",  # Fri
+                "7:30 am – 12:00 pm",                             # Sat
+            ],
+            "holiday_closings": WMD_HOLIDAY_FALLBACK,
+        },
         {
             "label":      "Regular",
             "start_date": "",
@@ -266,10 +286,25 @@ WMD_FALLBACK_TRANSFER = {
     ],
 }
 
-WMD_FALLBACK_COMPOST = {
+WMD_COMPOST_BUSINESS = {
     "name": "Compost Station",
     "url":  WMD_URL,
     "schedules": [
+        {
+            "label":      "Through April 2027",
+            "start_date": "",
+            "end_date":   "2027-04-30",
+            "hours_by_dow": [
+                "Closed",                                              # Sun
+                "Closed",                                              # Mon
+                "7:30 am – 12:00 pm & 12:30 pm – 4:00 pm",  # Tue
+                "12:30 pm – 4:00 pm",                             # Wed
+                "12:30 pm – 4:00 pm",                             # Thu
+                "7:30 am – 12:00 pm & 12:30 pm – 4:00 pm",  # Fri
+                "12:30 pm – 4:00 pm",                             # Sat
+            ],
+            "holiday_closings": WMD_HOLIDAY_FALLBACK,
+        },
         {
             "label":      "Regular",
             "start_date": "",
@@ -935,30 +970,10 @@ def main():
     now_iso = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
     businesses = []
 
-    # ── Transfer Station + Compost Station (fiwmd.net) ───────────────────────
-    print("Fetching WMD (Transfer + Compost) …", flush=True)
-    wmd_fallback = False
-    try:
-        html = asyncio.run(_fetch(WMD_URL))
-        parsed = parse_wmd_html(html)
-        if parsed:
-            print(f"  ✓ WMD facilities parsed: {list(parsed.keys())}", flush=True)
-            for name in ("Transfer Station", "Compost Station"):
-                if name in parsed:
-                    businesses.append(parsed[name])
-                else:
-                    print(f"  ⚠ {name} missing from parse — using fallback", flush=True)
-                    businesses.append(
-                        WMD_FALLBACK_TRANSFER if "Transfer" in name else WMD_FALLBACK_COMPOST
-                    )
-                    wmd_fallback = True
-        else:
-            raise ValueError("no WMD facilities parsed")
-    except Exception as e:
-        print(f"  ⚠ WMD failed ({e}) — using fallback", flush=True)
-        wmd_fallback = True
-        businesses.append(WMD_FALLBACK_TRANSFER)
-        businesses.append(WMD_FALLBACK_COMPOST)
+    # ── Transfer Station + Compost Station (hardcoded) ───────────────────────
+    print("Adding Transfer + Compost Stations (hardcoded hours) …", flush=True)
+    businesses.append(WMD_TRANSFER_BUSINESS)
+    businesses.append(WMD_COMPOST_BUSINESS)
 
     # ── Fishers Island Freight Office (hardcoded, below Compost) ─────────────
     print("Adding Fishers Island Freight Office (hardcoded hours) …", flush=True)
@@ -1026,7 +1041,7 @@ def main():
 
     data = {
         "fetched_at":    now_iso,
-        "used_fallback": ihp_fallback or wmd_fallback or vm_fallback,
+        "used_fallback": ihp_fallback or vm_fallback,
         "businesses":    businesses,
     }
 
