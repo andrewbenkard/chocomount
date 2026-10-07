@@ -281,22 +281,24 @@
   let _hoursData = null;
 
   // ── Sell-out history (loaded from sailing_stats.json) ───
-  // Map of "direction|time" → stats for sailings that often sell out.
+  // Map of "dow|direction|time" → tooltip for sailings that often sell out
+  // on that day of the week (dow: 0=Sunday … 6=Saturday).
   let _selloutStats = new Map();
 
   function loadSelloutStats(stats) {
     _selloutStats = new Map();
     if (!stats || !stats.sailings) return;
-    const weeks = Math.round((stats.window_days || 42) / 7);
+    const weeks = Math.round((stats.window_days || 70) / 7);
     for (const s of stats.sailings) {
       if (!s.often_sells_out) continue;
-      _selloutStats.set(`${s.direction}|${s.time}`,
-        `Sold out on ${s.sold_out} of the last ${s.sailings} sailings (past ${weeks} weeks)`);
+      _selloutStats.set(`${s.dow}|${s.direction}|${s.time}`,
+        `Sold out on ${s.sold_out} of the last ${s.sailings} ${s.day} sailings (past ${weeks} weeks)`);
     }
   }
 
-  function renderSelloutBadge(direction, time) {
-    const tip = _selloutStats.get(`${direction}|${time}`);
+  function renderSelloutBadge(isoDate, direction, time) {
+    const dow = new Date(isoDate + 'T00:00:00').getDay();
+    const tip = _selloutStats.get(`${dow}|${direction}|${time}`);
     return tip ? `<span class="sellout-badge" title="${tip}">Often sells out</span>` : '';
   }
 
@@ -383,7 +385,7 @@
       const spacesHtml = s.vehicle_spaces !== null && s.vehicle_spaces !== undefined
         ? `<span class="spaces ${cls}">~ ${s.vehicle_spaces}</span><span class="spaces-label"> cars</span>`
         : `<span class="spaces-label">—</span>`;
-      return `<tr><td class="time">${s.time}${renderSelloutBadge(dir.direction, s.time)}</td><td>${spacesHtml}</td></tr>`;
+      return `<tr><td class="time">${s.time}${renderSelloutBadge(isoDate, dir.direction, s.time)}</td><td>${spacesHtml}</td></tr>`;
     }).join('');
 
     return `
