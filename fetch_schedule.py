@@ -65,18 +65,26 @@ async def fetch_sailings(page, date_str: str, departure: str, destination: str) 
 
     # Retry loop: cold-start on the first page load can leave the iframe
     # empty; subsequent attempts with longer waits almost always succeed.
-    ATTEMPTS   = 3
-    WAIT_MS    = [8000, 12000, 16000]   # progressive back-off per attempt
+    ATTEMPTS   = 4
+    WAIT_MS    = [8000, 12000, 16000, 20000]   # progressive back-off per attempt
 
     for attempt in range(ATTEMPTS):
-        await page.goto(url, wait_until="domcontentloaded")
+        try:
+            await page.goto(url, wait_until="domcontentloaded", timeout=45000)
+        except Exception as e:
+            # A single slow/failed page load must not crash the whole run.
+            print(f"    ⚠ attempt {attempt + 1}: page load failed ({e})", flush=True)
+            continue
         wait = WAIT_MS[attempt]
         print(f"    attempt {attempt + 1}: waiting {wait // 1000}s …", flush=True)
         await page.wait_for_timeout(wait)
 
         # Scroll to trigger lazy loading
-        await page.mouse.wheel(0, 400)
-        await page.wait_for_timeout(2000)
+        try:
+            await page.mouse.wheel(0, 400)
+            await page.wait_for_timeout(2000)
+        except Exception as e:
+            print(f"    ⚠ Could not scroll page: {e}", flush=True)
 
         frame = await get_hornblower_frame(page)
         if frame is None:
@@ -118,6 +126,9 @@ def append_history(result: dict) -> int:
     rows = []
     for day in result.get("days", []):
         for direction in day.get("directions", []):
+            if direction.get("stale"):
+                # Carried over from an earlier run — already logged then.
+                continue
             for sailing in direction.get("sailings", []):
                 rows.append({
                     "fetched_at": fetched_at,
@@ -139,6 +150,28 @@ def append_history(result: dict) -> int:
     return len(rows)
 
 
+def load_previous_sailings() -> dict:
+    """Return {(iso_date, direction): (sailings, fetched_at)} from the existing
+    schedule.json, so a failed fetch can fall back to the last good data
+    instead of showing no sailings at all.  fetched_at is when that data was
+    actually scraped (preserved across repeated fallbacks)."""
+    try:
+        prev = json.loads(OUTPUT_FILE.read_text())
+    except Exception as e:
+        print(f"⚠ No previous schedule to fall back on ({e})", flush=True)
+        return {}
+    prev_fetched_at = prev.get("fetched_at", "")
+    sailings = {}
+    for day in prev.get("days", []):
+        for direction in day.get("directions", []):
+            if direction.get("sailings"):
+                sailings[(day.get("date"), direction.get("direction"))] = (
+                    direction["sailings"],
+                    direction.get("stale_from") or prev_fetched_at,
+                )
+    return sailings
+
+
 # ---------------------------------------------------------------------------
 # Main
 # ---------------------------------------------------------------------------
@@ -150,6 +183,8 @@ async def main():
         "fetched_at": datetime.now().isoformat(timespec="seconds"),
         "days": [],
     }
+    prev_sailings = load_previous_sailings()
+    missed, carried = [], []
 
     async with async_playwright() as p:
         browser = await p.chromium.launch(headless=True)
@@ -173,10 +208,22 @@ async def main():
             for direction_name, departure, destination in DIRECTIONS:
                 print(f"  {direction_name}", flush=True)
                 sailings = await fetch_sailings(page, date_str, departure, destination)
-                day_entry["directions"].append({
-                    "direction": direction_name,
-                    "sailings": sailings,
-                })
+                entry = {"direction": direction_name, "sailings": sailings}
+                if not sailings:
+                    missed.append(f"{iso_str} {direction_name}")
+                    previous = prev_sailings.get((iso_str, direction_name))
+                    if previous:
+                        # Keep the last good data rather than blanking the day.
+                        prev_list, prev_when = previous
+                        print(f"    ↺ Keeping {len(prev_list)} sailing(s) from {prev_when}", flush=True)
+                        entry = {
+                            "direction": direction_name,
+                            "sailings": prev_list,
+                            "stale": True,
+                            "stale_from": prev_when,
+                        }
+                        carried.append(f"{iso_str} {direction_name}")
+                day_entry["directions"].append(entry)
 
             result["days"].append(day_entry)
 
@@ -192,6 +239,12 @@ async def main():
 
     n_hist = append_history(result)
     print(f"✓ Appended {n_hist} observation(s) to {HISTORY_FILE.name}", flush=True)
+
+    if missed:
+        print(f"\n⚠ {len(missed)} fetch(es) returned no sailings:", flush=True)
+        for m in missed:
+            note = " (kept previous data)" if m in carried else " (no previous data)"
+            print(f"    {m}{note}", flush=True)
 
 
 if __name__ == "__main__":
