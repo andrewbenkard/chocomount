@@ -12,6 +12,12 @@ on:
 permissions:
   contents: write
 
+# Only one update at a time: a manual run and a scheduled run that overlap
+# queue up instead of racing each other to push.
+concurrency:
+  group: update-data-files
+  cancel-in-progress: false
+
 env:
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
@@ -60,5 +66,15 @@ jobs:
             echo "No changes to data files — skipping commit."
           else
             git commit -m "chore: update data files [$(date -u +'%Y-%m-%d %H:%M UTC')]"
-            git push
+            # main may have moved since this run started (e.g. a code push while
+            # it was queued). Replay the data commit on top of the latest main
+            # before pushing; retry a few times in case of a race.
+            for attempt in 1 2 3; do
+              git pull --rebase origin main && git push && exit 0
+              echo "Push attempt $attempt failed — retrying in 10s …"
+              git rebase --abort 2>/dev/null || true
+              sleep 10
+            done
+            echo "Could not push data files after 3 attempts."
+            exit 1
           fi
