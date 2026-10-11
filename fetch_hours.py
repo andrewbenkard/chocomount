@@ -270,7 +270,7 @@ WMD_TRANSFER_BUSINESS = {
             "start_date": "",
             "end_date":   "2027-04-30",
             "hours_by_dow": [
-                "Closed",                                              # Sun
+                "8:00 am – 12:00 pm",                             # Sun
                 "Closed",                                              # Mon
                 "7:30 am – 12:00 pm & 12:30 pm – 4:00 pm",  # Tue
                 "7:30 am – 12:00 pm",                             # Wed
