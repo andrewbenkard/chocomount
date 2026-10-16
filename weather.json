@@ -1,19 +1,19 @@
 {
-  "fetched_at": "2026-10-15T22:13:32Z",
+  "fetched_at": "2026-10-16T15:26:35Z",
   "days": {
-    "2026-10-15": "Clear sky, 65°F",
-    "2026-10-16": "Light rain, 65°F",
-    "2026-10-17": "Drizzle, 65°F",
-    "2026-10-18": "Clear sky, 54°F",
-    "2026-10-19": "Overcast, 58°F",
-    "2026-10-20": "Overcast, 62°F",
-    "2026-10-21": "Partly cloudy, 60°F",
-    "2026-10-22": "Mainly clear, 56°F",
-    "2026-10-23": "Clear sky, 63°F",
-    "2026-10-24": "Clear sky, 58°F",
-    "2026-10-25": "Mainly clear, 56°F",
-    "2026-10-26": "Mainly clear, 66°F",
-    "2026-10-27": "Partly cloudy, 60°F",
-    "2026-10-28": "Overcast, 59°F"
+    "2026-10-16": "Heavy rain, 65°F",
+    "2026-10-17": "Heavy drizzle, 65°F",
+    "2026-10-18": "Overcast, 55°F",
+    "2026-10-19": "Light drizzle, 58°F",
+    "2026-10-20": "Light drizzle, 55°F",
+    "2026-10-21": "Partly cloudy, 54°F",
+    "2026-10-22": "Overcast, 55°F",
+    "2026-10-23": "Overcast, 64°F",
+    "2026-10-24": "Overcast, 57°F",
+    "2026-10-25": "Overcast, 58°F",
+    "2026-10-26": "Overcast, 61°F",
+    "2026-10-27": "Overcast, 61°F",
+    "2026-10-28": "Overcast, 57°F",
+    "2026-10-29": "Overcast, 65°F"
   }
 }
