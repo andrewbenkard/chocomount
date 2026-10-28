@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-10-27T23:04:16Z",
+  "fetched_at": "2026-10-28T17:11:33Z",
   "used_fallback": false,
   "businesses": [
     {
@@ -515,20 +515,6 @@
             "9:00 am – 12:00 pm",
             "9:00 am – 12:00 pm",
             "Closed"
-          ]
-        },
-        {
-          "label": "Peak",
-          "start_date": "",
-          "end_date": "",
-          "hours_by_dow": [
-            "Closed",
-            "9:00 am – 12:00 pm & 1:00 pm – 4:00 pm",
-            "9:00 am – 12:30 pm",
-            "9:00 am – 12:00 pm & 1:00 pm – 4:00 pm",
-            "9:00 am – 12:30 pm",
-            "9:00 am – 12:30 pm",
-            "9:00 am – 12:30 pm"
           ]
         }
       ]
