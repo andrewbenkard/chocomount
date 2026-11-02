@@ -8,7 +8,7 @@ Sources:
   • Transfer Station → https://fiwmd.net/  (hardcoded – hours provided by user)
   • Compost Station  → https://fiwmd.net/  (hardcoded – hours provided by user)
   • Library          → https://filibrary.org/
-  • Village Market   → https://fishersisland.net/listing/village-market/
+  • Village Market   → https://fishersisland.net/listing/village-market/  (hardcoded – hours provided by user)
   • West End Cafe    → https://www.westendfi.com/  (hardcoded – site structure unknown)
   • Beach Plum       → https://fishersisland.net/listing/beach-plum/  (hardcoded – hours confirmed by user)
 
@@ -378,18 +378,25 @@ VM_HOLIDAY_FALLBACK = [
     {"date": "2026-09-07",  "name": "Labor Day"},
     {"date": "2026-11-26",  "name": "Thanksgiving Day"},
     {"date": "2026-12-25",  "name": "Christmas Day"},
+    {"date": "2027-01-01",  "name": "New Year’s Day"},
+    {"date": "2027-05-31",  "name": "Memorial Day"},
+    {"date": "2027-07-04",  "name": "Independence Day"},
+    {"date": "2027-09-06",  "name": "Labor Day"},
+    {"date": "2027-11-25",  "name": "Thanksgiving Day"},
+    {"date": "2027-12-25",  "name": "Christmas Day"},
 ]
 
+# Hardcoded (no longer scraped from fishersisland.net) – hours provided by user.
 # Summer schedule is listed first so getBusinessHours() matches it during the
 # summer window before falling through to the always-active Winter schedule.
-VM_FALLBACK = {
+VILLAGE_MARKET_BUSINESS = {
     "name": "Village Market",
     "url":  VM_URL,
     "schedules": [
         {
             "label":      "Summer",
-            "start_date": "2026-06-13",   # approximate; updated by scraper
-            "end_date":   "2026-08-30",
+            "start_date": "2027-06-17",   # as listed on fishersisland.net
+            "end_date":   "2027-08-30",
             "hours_by_dow": [
                 "Closed",                  # Sun
                 "7:30AM\u20135:00PM",      # Mon
@@ -412,7 +419,7 @@ VM_FALLBACK = {
                 "7:30AM\u20131:00PM & 3:00PM\u20135:00PM",  # Wed
                 "7:30AM\u20131:00PM & 3:00PM\u20135:00PM",  # Thu
                 "7:30AM\u20131:00PM & 3:00PM\u20135:00PM",  # Fri
-                "7:30AM\u20131:00PM & 3:00PM\u20135:00PM",  # Sat
+                "7:30AM\u20131:00PM",                        # Sat
             ],
             "holiday_closings": VM_HOLIDAY_FALLBACK,
         },
@@ -995,22 +1002,9 @@ def main():
     print("Fetching Library (filibrary.org) …", flush=True)
     businesses.append(LIBRARY_BUSINESS)
 
-    # ── Village Market (fishersisland.net) ───────────────────────────────────
-    print("Fetching Village Market (fishersisland.net) …", flush=True)
-    vm_fallback = False
-    try:
-        html = asyncio.run(_fetch(VM_URL))
-        biz = parse_village_market_html(html)
-        if biz:
-            labels = [s["label"] for s in biz["schedules"]]
-            print(f"  ✓ Village Market schedules parsed: {labels}", flush=True)
-            businesses.append(biz)
-        else:
-            raise ValueError("no Village Market schedules parsed")
-    except Exception as e:
-        print(f"  ⚠ Village Market failed ({e}) — using fallback", flush=True)
-        vm_fallback = True
-        businesses.append(VM_FALLBACK)
+    # ── Village Market (hardcoded) ───────────────────────────────────────────
+    print("Adding Village Market (hardcoded hours) …", flush=True)
+    businesses.append(VILLAGE_MARKET_BUSINESS)
 
     # ── Beach Plum (hardcoded) ────────────────────────────────────────────────
     print("Adding Beach Plum (hardcoded hours) …", flush=True)
@@ -1053,7 +1047,7 @@ def main():
 
     data = {
         "fetched_at":    now_iso,
-        "used_fallback": ihp_fallback or vm_fallback,
+        "used_fallback": ihp_fallback,
         "businesses":    businesses,
     }
 

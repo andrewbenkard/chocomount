@@ -384,6 +384,30 @@
             {
               "date": "2026-12-25",
               "name": "Christmas Day"
+            },
+            {
+              "date": "2027-01-01",
+              "name": "New Year’s Day"
+            },
+            {
+              "date": "2027-05-31",
+              "name": "Memorial Day"
+            },
+            {
+              "date": "2027-07-04",
+              "name": "Independence Day"
+            },
+            {
+              "date": "2027-09-06",
+              "name": "Labor Day"
+            },
+            {
+              "date": "2027-11-25",
+              "name": "Thanksgiving Day"
+            },
+            {
+              "date": "2027-12-25",
+              "name": "Christmas Day"
             }
           ]
         },
@@ -398,7 +422,7 @@
             "7:30 am – 1:00 pm & 3:00 pm – 5:00 pm",
             "7:30 am – 1:00 pm & 3:00 pm – 5:00 pm",
             "7:30 am – 1:00 pm & 3:00 pm – 5:00 pm",
-            "7:30 am – 1:00 pm & 3:00 pm – 5:00 pm"
+            "7:30 am – 1:00 pm"
           ],
           "holiday_closings": [
             {
@@ -423,6 +447,30 @@
             },
             {
               "date": "2026-12-25",
+              "name": "Christmas Day"
+            },
+            {
+              "date": "2027-01-01",
+              "name": "New Year’s Day"
+            },
+            {
+              "date": "2027-05-31",
+              "name": "Memorial Day"
+            },
+            {
+              "date": "2027-07-04",
+              "name": "Independence Day"
+            },
+            {
+              "date": "2027-09-06",
+              "name": "Labor Day"
+            },
+            {
+              "date": "2027-11-25",
+              "name": "Thanksgiving Day"
+            },
+            {
+              "date": "2027-12-25",
               "name": "Christmas Day"
             }
           ]
