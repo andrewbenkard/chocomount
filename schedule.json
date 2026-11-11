@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-11-10T18:28:54",
+  "fetched_at": "2026-11-10T23:56:52",
   "days": [
     {
       "date": "2026-11-10",
@@ -8,6 +8,10 @@
         {
           "direction": "From New London",
           "sailings": [
+            {
+              "time": "7:00 AM",
+              "vehicle_spaces": 15
+            },
             {
               "time": "3:30 PM",
               "vehicle_spaces": 16
@@ -22,8 +26,12 @@
           "direction": "From Fishers Island",
           "sailings": [
             {
+              "time": "8:15 AM",
+              "vehicle_spaces": 0
+            },
+            {
               "time": "4:45 PM",
-              "vehicle_spaces": 7
+              "vehicle_spaces": 17
             },
             {
               "time": "7:00 PM",
@@ -59,7 +67,7 @@
           "sailings": [
             {
               "time": "8:15 AM",
-              "vehicle_spaces": 2
+              "vehicle_spaces": 0
             },
             {
               "time": "4:45 PM",
@@ -82,7 +90,7 @@
           "sailings": [
             {
               "time": "7:00 AM",
-              "vehicle_spaces": 14
+              "vehicle_spaces": 12
             },
             {
               "time": "11:30 AM",
@@ -107,7 +115,7 @@
             },
             {
               "time": "12:45 PM",
-              "vehicle_spaces": 16
+              "vehicle_spaces": 14
             },
             {
               "time": "4:45 PM",
@@ -194,7 +202,7 @@
             },
             {
               "time": "3:30 PM",
-              "vehicle_spaces": 25
+              "vehicle_spaces": 24
             },
             {
               "time": "6:15 PM",
@@ -207,7 +215,7 @@
           "sailings": [
             {
               "time": "8:15 AM",
-              "vehicle_spaces": 24
+              "vehicle_spaces": 22
             },
             {
               "time": "12:45 PM",
