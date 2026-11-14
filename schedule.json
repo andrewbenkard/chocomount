@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-11-14T16:51:32",
+  "fetched_at": "2026-11-14T22:54:10",
   "days": [
     {
       "date": "2026-11-14",
@@ -9,12 +9,20 @@
           "direction": "From New London",
           "sailings": [
             {
-              "time": "3:30 PM",
-              "vehicle_spaces": 19
+              "time": "7:00 AM",
+              "vehicle_spaces": 23
+            },
+            {
+              "time": "11:30 AM",
+              "vehicle_spaces": 24
+            },
+            {
+              "time": "3:00 PM",
+              "vehicle_spaces": 23
             },
             {
               "time": "6:15 PM",
-              "vehicle_spaces": 24
+              "vehicle_spaces": 22
             }
           ]
         },
@@ -22,8 +30,16 @@
           "direction": "From Fishers Island",
           "sailings": [
             {
-              "time": "4:45 PM",
-              "vehicle_spaces": 25
+              "time": "8:15 AM",
+              "vehicle_spaces": 15
+            },
+            {
+              "time": "12:45 PM",
+              "vehicle_spaces": 18
+            },
+            {
+              "time": "4:15 PM",
+              "vehicle_spaces": 20
             },
             {
               "time": "7:00 PM",
@@ -111,7 +127,7 @@
           "sailings": [
             {
               "time": "8:15 AM",
-              "vehicle_spaces": 20
+              "vehicle_spaces": 19
             },
             {
               "time": "12:45 PM",
@@ -230,7 +246,7 @@
             },
             {
               "time": "11:30 AM",
-              "vehicle_spaces": 24
+              "vehicle_spaces": 23
             },
             {
               "time": "3:30 PM",
@@ -526,7 +542,7 @@
             },
             {
               "time": "11:30 AM",
-              "vehicle_spaces": 6
+              "vehicle_spaces": 5
             },
             {
               "time": "3:30 PM",
@@ -618,7 +634,7 @@
             },
             {
               "time": "3:30 PM",
-              "vehicle_spaces": 17
+              "vehicle_spaces": 16
             },
             {
               "time": "6:45 PM",
@@ -639,7 +655,7 @@
             },
             {
               "time": "12:45 PM",
-              "vehicle_spaces": 19
+              "vehicle_spaces": 17
             },
             {
               "time": "4:45 PM",
