@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-21T23:56:17Z",
+  "generated_at": "2026-11-22T18:26:43Z",
   "window_days": 70,
   "min_sailings": 6,
   "sold_out_threshold": 0.333,
@@ -1069,9 +1069,9 @@
       "day": "Saturday",
       "direction": "From Fishers Island",
       "time": "11:15 AM",
-      "sailings": 5,
-      "sold_out": 3,
-      "sold_out_rate": 0.6,
+      "sailings": 4,
+      "sold_out": 2,
+      "sold_out_rate": 0.5,
       "often_sells_out": false
     },
     {
@@ -1079,7 +1079,7 @@
       "day": "Saturday",
       "direction": "From Fishers Island",
       "time": "12:45 PM",
-      "sailings": 5,
+      "sailings": 6,
       "sold_out": 0,
       "sold_out_rate": 0.0,
       "often_sells_out": false
@@ -1089,9 +1089,9 @@
       "day": "Saturday",
       "direction": "From Fishers Island",
       "time": "2:15 PM",
-      "sailings": 5,
+      "sailings": 4,
       "sold_out": 2,
-      "sold_out_rate": 0.4,
+      "sold_out_rate": 0.5,
       "often_sells_out": false
     },
     {
@@ -1099,7 +1099,7 @@
       "day": "Saturday",
       "direction": "From Fishers Island",
       "time": "4:15 PM",
-      "sailings": 4,
+      "sailings": 5,
       "sold_out": 0,
       "sold_out_rate": 0.0,
       "often_sells_out": false
@@ -1109,7 +1109,7 @@
       "day": "Saturday",
       "direction": "From Fishers Island",
       "time": "4:45 PM",
-      "sailings": 5,
+      "sailings": 6,
       "sold_out": 0,
       "sold_out_rate": 0.0,
       "often_sells_out": false
@@ -1119,7 +1119,7 @@
       "day": "Saturday",
       "direction": "From Fishers Island",
       "time": "5:15 PM",
-      "sailings": 5,
+      "sailings": 4,
       "sold_out": 0,
       "sold_out_rate": 0.0,
       "often_sells_out": false
@@ -1149,36 +1149,6 @@
       "day": "Saturday",
       "direction": "From New London",
       "time": "10:00 AM",
-      "sailings": 5,
-      "sold_out": 0,
-      "sold_out_rate": 0.0,
-      "often_sells_out": false
-    },
-    {
-      "dow": 6,
-      "day": "Saturday",
-      "direction": "From New London",
-      "time": "11:30 AM",
-      "sailings": 5,
-      "sold_out": 0,
-      "sold_out_rate": 0.0,
-      "often_sells_out": false
-    },
-    {
-      "dow": 6,
-      "day": "Saturday",
-      "direction": "From New London",
-      "time": "1:00 PM",
-      "sailings": 5,
-      "sold_out": 0,
-      "sold_out_rate": 0.0,
-      "often_sells_out": false
-    },
-    {
-      "dow": 6,
-      "day": "Saturday",
-      "direction": "From New London",
-      "time": "3:00 PM",
       "sailings": 4,
       "sold_out": 0,
       "sold_out_rate": 0.0,
@@ -1188,7 +1158,27 @@
       "dow": 6,
       "day": "Saturday",
       "direction": "From New London",
-      "time": "3:30 PM",
+      "time": "11:30 AM",
+      "sailings": 6,
+      "sold_out": 0,
+      "sold_out_rate": 0.0,
+      "often_sells_out": false
+    },
+    {
+      "dow": 6,
+      "day": "Saturday",
+      "direction": "From New London",
+      "time": "1:00 PM",
+      "sailings": 4,
+      "sold_out": 0,
+      "sold_out_rate": 0.0,
+      "often_sells_out": false
+    },
+    {
+      "dow": 6,
+      "day": "Saturday",
+      "direction": "From New London",
+      "time": "3:00 PM",
       "sailings": 5,
       "sold_out": 0,
       "sold_out_rate": 0.0,
@@ -1198,8 +1188,18 @@
       "dow": 6,
       "day": "Saturday",
       "direction": "From New London",
+      "time": "3:30 PM",
+      "sailings": 6,
+      "sold_out": 0,
+      "sold_out_rate": 0.0,
+      "often_sells_out": false
+    },
+    {
+      "dow": 6,
+      "day": "Saturday",
+      "direction": "From New London",
       "time": "4:00 PM",
-      "sailings": 5,
+      "sailings": 4,
       "sold_out": 0,
       "sold_out_rate": 0.0,
       "often_sells_out": false
