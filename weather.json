@@ -1,19 +1,19 @@
 {
-  "fetched_at": "2026-11-23T22:40:45Z",
+  "fetched_at": "2026-11-24T04:25:21Z",
   "days": {
-    "2026-11-23": "Rain, 57°F",
+    "2026-11-23": "Rain, 58°F",
     "2026-11-24": "Overcast, 50°F",
-    "2026-11-25": "Overcast, 46°F",
-    "2026-11-26": "Light showers, 58°F",
-    "2026-11-27": "Drizzle, 58°F",
-    "2026-11-28": "Light drizzle, 50°F",
-    "2026-11-29": "Overcast, 50°F",
-    "2026-11-30": "Mainly clear, 50°F",
-    "2026-12-01": "Drizzle, 54°F",
-    "2026-12-02": "Drizzle, 57°F",
-    "2026-12-03": "Overcast, 45°F",
-    "2026-12-04": "Overcast, 50°F",
-    "2026-12-05": "Rain, 51°F",
-    "2026-12-06": "Drizzle, 51°F"
+    "2026-11-25": "Overcast, 45°F",
+    "2026-11-26": "Showers, 60°F",
+    "2026-11-27": "Snow showers, 59°F",
+    "2026-11-28": "Overcast, 49°F",
+    "2026-11-29": "Overcast, 53°F",
+    "2026-11-30": "Overcast, 56°F",
+    "2026-12-01": "Light drizzle, 54°F",
+    "2026-12-02": "Light showers, 54°F",
+    "2026-12-03": "Overcast, 37°F",
+    "2026-12-04": "Overcast, 46°F",
+    "2026-12-05": "Heavy drizzle, 48°F",
+    "2026-12-06": "Showers, 45°F"
   }
 }
